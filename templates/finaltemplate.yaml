@@ -1,0 +1,82 @@
+--- 
+Description: "Parent CFT template"
+Parameters: 
+  AWSMarketplaceMeteringRecordsTableName: 
+    Default: AWSMarketplaceMeteringRecords
+    Description: "Use custom name for the Metering Records Table or there is a default value"
+    Type: String
+  CreateRegistrationWebPage: 
+    AllowedValues: 
+      - true
+      - false
+    Default: true
+    Description: "If you do not want to create a registraion page then select false, otherwise there is a default value"
+    Type: String
+  EntitlementSNSTopic: 
+    Description: "If your product is SaaS Contracts then please use the entitelement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+    Type: String
+  MarketplaceTechAdminEmail: 
+    Type: String
+  NewSubscribersTableName: 
+    Default: AWSMarketplaceSubscribers
+    Description: "Use custom name for the New Subscribers Table or there is a default value"
+    Type: String
+  ProductCode: 
+    Description: "Please use the product code provided from the AWS Marketplace at the time of limited listing publish."
+    Type: String
+  SubscriptionSNSTopic: 
+    Description: "If your product is SaaS subscriptions or Saas contracts with subscription then please use the entitelement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+    Type: String
+  TypeOfSaaSListing: 
+    AllowedValues: 
+      - contracts_with_subscription
+      - contracts
+      - subscriptions
+    Default: contracts_with_subscription
+    Description: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value"
+    Type: String
+
+  WebsiteS3BucketName: 
+    Type: String
+
+Conditions:
+  CreateRegistrationWebPageCond: !Equals
+    - !Ref CreateRegistrationWebPage
+    - true
+
+Resources: 
+  SampleEC2Instance: 
+    Properties: 
+      BlockDeviceMappings: 
+        - 
+          DeviceName: /dev/sdm
+          Ebs: 
+            DeleteOnTermination: "false"
+            Iops: "200"
+            VolumeSize: "20"
+            VolumeType: io1
+        - 
+          DeviceName: /dev/sdk
+          NoDevice: {}
+      ImageId: ami-0080254577596bbae 
+      KeyName: Nessus_Scanning
+    Type: "AWS::EC2::Instance"
+  SampleApp: 
+    Properties: 
+      Location: 
+        ApplicationId: "arn:aws:serverlessrepo:us-east-1:297512042063:applications/my-app"
+        SemanticVersion: "0.0.1"
+      Parameters: 
+        AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
+        CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
+        EntitlementSNSTopic: !Ref EntitlementSNSTopic
+        MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
+        NewSubscribersTableName: !Ref NewSubscribersTableName
+        ProductCode: !Ref ProductCode
+        SubscriptionSNSTopic: !Ref SubscriptionSNSTopic
+        TypeOfSaaSListing: !Ref TypeOfSaaSListing
+        WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue] 
+        
+    Type: "AWS::Serverless::Application"
+
+Transform: "AWS::Serverless-2016-10-31"
