@@ -1,5 +1,7 @@
---- 
-Description: "Parent CFT template"
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Parent CFT template (qs-1s3j136e1)"
+Metadata:
+
 Parameters: 
   AWSMarketplaceMeteringRecordsTableName: 
     Default: AWSMarketplaceMeteringRecords
@@ -10,10 +12,10 @@ Parameters:
       - true
       - false
     Default: true
-    Description: "If you do not want to create a registraion page then select false, otherwise there is a default value"
+    Description: "If you do not want to create a registration page then select false, otherwise there is a default value"
     Type: String
   EntitlementSNSTopic: 
-    Description: "If your product is SaaS Contracts then please use the entitelement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+    Description: "If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
     Type: String
   MarketplaceTechAdminEmail: 
     Type: String
@@ -25,7 +27,7 @@ Parameters:
     Description: "Please use the product code provided from the AWS Marketplace at the time of limited listing publish."
     Type: String
   SubscriptionSNSTopic: 
-    Description: "If your product is SaaS subscriptions or Saas contracts with subscription then please use the entitelement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+    Description: "If your product is SaaS subscriptions or SaaS contracts with subscription then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
     Type: String
   TypeOfSaaSListing: 
     AllowedValues: 
@@ -43,6 +45,30 @@ Conditions:
   CreateRegistrationWebPageCond: !Equals
     - !Ref CreateRegistrationWebPage
     - true
+project:
+  name: quickstart-tableau-sagemaker
+  regions:
+  - us-east-1
+  - us-east-2
+  - us-west-1
+  - us-west-2
+  - eu-north-1
+  - eu-central-1
+  - eu-west-1
+  - eu-west-2
+  - eu-west-3
+tests:
+  default:
+    template: templates/sagemaker-for-tableau-main.template
+    s3_regional_buckets: true
+    parameters:
+      AvailabilityZones: $[taskcat_getaz_2]
+      DomainName: override
+      CertificateARN: override
+      HostedZoneId: override
+      QSS3KeyPrefix: "quickstart-tableau-sagemaker/"
+      QSS3BucketName: $[taskcat_autobucket]
+      QSS3BucketRegion: $[taskcat_current_region]
 
 Resources: 
   SampleEC2Instance: 
