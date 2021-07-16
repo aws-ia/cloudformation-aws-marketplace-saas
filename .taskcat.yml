@@ -4,11 +4,12 @@ project:
   parameters:
     AWSMarketplaceMeteringRecordsTableName: AWSMarketplaceMeteringRecords
     CreateRegistrationWebPage: true
-    EntitlementSNSTopic:
-    MarketplaceTechAdminEmail:
+    EntitlementSNSTopic: --overridden--
+    MarketplaceTechAdminEmail: --overridden--
     NewSubscribersTableName:
-    ProductCode:
-    SubscriptionSNSTopic:
+    ProductCode: --overridden--
+    ProductId: --overridden--
+    SubscriptionSNSTopic: --overridden--
     TypeOfSaaSListing:
     WebsiteS3BucketName: $[taskcat_autobucket]
     QSS3KeyPrefix: "cloudformation-aws-marketplace-saas/"

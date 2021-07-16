@@ -1,18 +1,64 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Transform: "AWS::Serverless-2016-10-31"
 Description: "Parent CFT template (qs-1s3j136e1)"
 Metadata:
-
-Parameters: 
+  AWS::CloudFormation::Interface:
+    ParameterLabels:
+      AWSMarketplaceMeteringRecordsTableName:
+        default: "Use custom name for the Metering Records Table or there is a default value"
+      CreateRegistrationWebPage:
+        default: "If you do not want to create a registration page then select false, otherwise there is a default value"
+      EntitlementSNSTopic:
+        default: "If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+      MarketplaceTechAdminEmail:
+        default: ""
+      NewSubscribersTableName:
+        default: "Use custom name for the New Subscribers Table or there is a default value"
+      ProductCode:
+        default: "Please use the product code provided from the AWS Marketplace at the time of limited listing publish."
+      SubscriptionSNSTopic:
+        default: "If your product is SaaS subscriptions or SaaS contracts with subscription then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+      TypeOfSaaSListing:
+       default: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value"
+      WebsiteS3BucketName:
+        default: ""
+#    # AWS IA configuration
+#      QSS3BucketName:
+#        default: Quick Start S3 bucket name
+#      QSS3BucketRegion:
+#        default: Quick Start S3 bucket region
+#      QSS3KeyPrefix:
+#        default: Quick Start S3 key prefix
+    ParameterGroups:
+      - Label:
+          default: AWS Infrastructure and Automation configuration
+        Parameters:
+          - AWSMarketplaceMeteringRecordsTableName
+          - CreateRegistrationWebPage
+          - EntitlementSNSTopic
+          - MarketplaceTechAdminEmail
+          - NewSubscribersTableName
+          - ProductCode
+          - SubscriptionSNSTopic
+          - TypeOfSaaSListing
+          - WebsiteS3BucketName
+#     - Label:
+#        default: AWS Infrastructure and Automation configuration
+#      Parameters:
+#        - QSS3BucketName
+#        - QSS3KeyPrefix
+#        - QSS3BucketRegion
+Parameters:
   AWSMarketplaceMeteringRecordsTableName: 
     Default: AWSMarketplaceMeteringRecords
-    Description: "Use custom name for the Metering Records Table or there is a default value"
+    Description: "Use custom name for the Metering Records Table or there is a default value."
     Type: String
   CreateRegistrationWebPage: 
     AllowedValues: 
       - true
       - false
     Default: true
-    Description: "If you do not want to create a registration page then select false, otherwise there is a default value"
+    Description: "If you do not want to create a registration page then select false, otherwise there is a default value."
     Type: String
   EntitlementSNSTopic: 
     Description: "If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
@@ -21,7 +67,7 @@ Parameters:
     Type: String
   NewSubscribersTableName: 
     Default: AWSMarketplaceSubscribers
-    Description: "Use custom name for the New Subscribers Table or there is a default value"
+    Description: "Use custom name for the New Subscribers Table or there is a default value."
     Type: String
   ProductCode: 
     Description: "Please use the product code provided from the AWS Marketplace at the time of limited listing publish."
@@ -35,62 +81,48 @@ Parameters:
       - contracts
       - subscriptions
     Default: contracts_with_subscription
-    Description: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value"
+    Description: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value."
     Type: String
-
-  WebsiteS3BucketName: 
+  WebsiteS3BucketName:
     Type: String
-
+    Description: "S3 Bucket hosting the SaaS customer registration."
+  MarketplaceIntegrationApplicationARN:
+    Type: String
+    Description: "AWS Market Place integration application provided by AWS Market Place."
+# Integration and Automation location parameters
+#  QSS3BucketName:
+#    AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
+#    ConstraintDescription: Quick Start bucket name can include numbers, lowercase
+#      letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen
+#      (-).
+#    Default: aws-quickstart
+#    Description: S3 bucket name for the Quick Start assets. This string can include
+#      numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start
+#      or end with a hyphen (-).
+#    Type: String
+#  QSS3BucketRegion:
+#    Default: 'us-east-1'
+#    Description: 'The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value.'
+#    Type: String
+#  QSS3KeyPrefix:
+#    AllowedPattern: ^[0-9a-zA-Z-/]*$
+#    ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
+#      uppercase letters, hyphens (-), and forward slash (/).
+#    Default: quickstart-eks-gitlab/
+#    Description: S3 key prefix for the Quick Start assets. Quick Start key prefix
+#      can include numbers, lowercase letters, uppercase letters, hyphens (-), and
+#      forward slash (/).
+#    Type: String
 Conditions:
   CreateRegistrationWebPageCond: !Equals
     - !Ref CreateRegistrationWebPage
     - true
-project:
-  name: quickstart-tableau-sagemaker
-  regions:
-  - us-east-1
-  - us-east-2
-  - us-west-1
-  - us-west-2
-  - eu-north-1
-  - eu-central-1
-  - eu-west-1
-  - eu-west-2
-  - eu-west-3
-tests:
-  default:
-    template: templates/sagemaker-for-tableau-main.template
-    s3_regional_buckets: true
-    parameters:
-      AvailabilityZones: $[taskcat_getaz_2]
-      DomainName: override
-      CertificateARN: override
-      HostedZoneId: override
-      QSS3KeyPrefix: "quickstart-tableau-sagemaker/"
-      QSS3BucketName: $[taskcat_autobucket]
-      QSS3BucketRegion: $[taskcat_current_region]
 
-Resources: 
-  SampleEC2Instance: 
-    Properties: 
-      BlockDeviceMappings: 
-        - 
-          DeviceName: /dev/sdm
-          Ebs: 
-            DeleteOnTermination: "false"
-            Iops: "200"
-            VolumeSize: "20"
-            VolumeType: io1
-        - 
-          DeviceName: /dev/sdk
-          NoDevice: {}
-      ImageId: ami-0080254577596bbae 
-      KeyName: Nessus_Scanning
-    Type: "AWS::EC2::Instance"
-  SampleApp: 
+Resources:
+  SampleApp:
     Properties: 
       Location: 
-        ApplicationId: "arn:aws:serverlessrepo:us-east-1:297512042063:applications/my-app"
+        ApplicationId: !Ref MarketplaceIntegrationApplicationARN
         SemanticVersion: "0.0.1"
       Parameters: 
         AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
@@ -102,7 +134,4 @@ Resources:
         SubscriptionSNSTopic: !Ref SubscriptionSNSTopic
         TypeOfSaaSListing: !Ref TypeOfSaaSListing
         WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue] 
-        
     Type: "AWS::Serverless::Application"
-
-Transform: "AWS::Serverless-2016-10-31"
