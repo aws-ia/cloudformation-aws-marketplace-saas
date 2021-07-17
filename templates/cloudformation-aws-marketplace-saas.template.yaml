@@ -1,7 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: "AWS::Serverless-2016-10-31"
-Description: "AWS Market Place SaaS - Client registration (qs-1s3j136e1)"
+Description: "AWS Market Place SaaS - entitlemet and subscription portal (qs-1s3j136e1)"
 Metadata:
+  QuickStartDocumentation:
+    EntrypointName: "Deploy AWS Market Place SaaS entitlement and subscription portal"
   AWS::CloudFormation::Interface:
     ParameterLabels:
       AWSMarketplaceMeteringRecordsTableName:
