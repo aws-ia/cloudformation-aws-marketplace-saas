@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: "AWS::Serverless-2016-10-31"
-Description: "Parent CFT template (qs-1s3j136e1)"
+Description: "AWS Market Place SaaS - Client registration (qs-1s3j136e1)"
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterLabels:
@@ -22,6 +22,8 @@ Metadata:
        default: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value"
       WebsiteS3BucketName:
         default: ""
+      MarketplaceIntegrationApplicationARN:
+        default: "(Provided by AWS Market Place) ARN for Marketplace integration SAM app."
 #    # AWS IA configuration
 #      QSS3BucketName:
 #        default: Quick Start S3 bucket name
@@ -55,9 +57,9 @@ Parameters:
     Type: String
   CreateRegistrationWebPage: 
     AllowedValues: 
-      - true
-      - false
-    Default: true
+      - "true"
+      - "false"
+    Default: "true"
     Description: "If you do not want to create a registration page then select false, otherwise there is a default value."
     Type: String
   EntitlementSNSTopic: 
