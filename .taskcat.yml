@@ -1,0 +1,25 @@
+project:
+  name: cloudformation-aws-marketplace-saas
+  shorten_stack_name: true
+  parameters:
+    AWSMarketplaceMeteringRecordsTableName: AWSMarketplaceMeteringRecords
+    CreateRegistrationWebPage: "true"
+    EntitlementSNSTopic: --overridden--
+    MarketplaceTechAdminEmail: --overridden--
+    NewSubscribersTableName: AWSMarketplaceNewSubscribers
+    ProductCode: --overridden--
+    ProductId: --overridden--
+    SubscriptionSNSTopic: --overridden--
+    TypeOfSaaSListing: --overridden--
+    WebsiteS3BucketName: $[taskcat_autobucket]
+    ArtifactBucketName: $[taskcat_autobucket]
+    QSS3KeyPrefix: "cloudformation-aws-marketplace-saas/"
+    QSS3BucketName: $[taskcat_autobucket]
+    QSS3BucketRegion: $[taskcat_current_region]
+  regions:
+  - us-east-1
+tests:
+  default:
+    template: templates/cloudformation-aws-marketplace-saas.template.yaml
+    regions:
+      - us-east-1

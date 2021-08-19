@@ -1,0 +1,129 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "AWS Market Place SaaS - entitlement and subscription portal (qs-1s3j136e1)"
+Metadata:
+  QuickStartDocumentation:
+    EntrypointName: "Deploy AWS Market Place SaaS entitlement and subscription portal"
+  AWS::CloudFormation::Interface:
+    ParameterLabels:
+      AWSMarketplaceMeteringRecordsTableName:
+        default: "Use custom name for the Metering Records Table or there is a default value"
+      CreateRegistrationWebPage:
+        default: "If you do not want to create a registration page then select false, otherwise there is a default value"
+      EntitlementSNSTopic:
+        default: "If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+      MarketplaceTechAdminEmail:
+        default: ""
+      NewSubscribersTableName:
+        default: "Use custom name for the New Subscribers Table or there is a default value"
+      ProductCode:
+        default: "Please use the product code provided from the AWS Marketplace at the time of limited listing publish."
+      SubscriptionSNSTopic:
+        default: "If your product is SaaS subscriptions or SaaS contracts with subscription then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+      TypeOfSaaSListing:
+       default: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value"
+      WebsiteS3BucketName:
+        default: ""
+      MarketplaceIntegrationApplicationARN:
+        default: "(Provided by AWS Market Place) ARN for Marketplace integration SAM app."
+      ArtifactBucketName:
+        default: Artifact S3 bucket name
+#    # AWS IA configuration
+#      QSS3BucketName:
+#        default: Quick Start S3 bucket name
+#      QSS3BucketRegion:
+#        default: Quick Start S3 bucket region
+#      QSS3KeyPrefix:
+#        default: Quick Start S3 key prefix
+    ParameterGroups:
+      - Label:
+          default: AWS Infrastructure and Automation configuration
+        Parameters:
+          - AWSMarketplaceMeteringRecordsTableName
+          - CreateRegistrationWebPage
+          - EntitlementSNSTopic
+          - MarketplaceTechAdminEmail
+          - NewSubscribersTableName
+          - ProductCode
+          - SubscriptionSNSTopic
+          - TypeOfSaaSListing
+          - WebsiteS3BucketName
+#     - Label:
+#        default: AWS Infrastructure and Automation configuration
+#      Parameters:
+#        - QSS3BucketName
+#        - QSS3KeyPrefix
+#        - QSS3BucketRegion
+Parameters:
+  AWSMarketplaceMeteringRecordsTableName: 
+    Default: AWSMarketplaceMeteringRecords
+    Description: "Use custom name for the Metering Records Table or there is a default value."
+    Type: String
+  CreateRegistrationWebPage: 
+    AllowedValues: 
+      - "true"
+      - "false"
+    Default: "true"
+    Description: "If you do not want to create a registration page then select false, otherwise there is a default value."
+    Type: String
+  EntitlementSNSTopic: 
+    Description: "If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+    Type: String
+  MarketplaceTechAdminEmail: 
+    Type: String
+  NewSubscribersTableName: 
+    Default: AWSMarketplaceSubscribers
+    Description: "Use custom name for the New Subscribers Table or there is a default value."
+    Type: String
+  ProductCode: 
+    Description: "Please use the product code provided from the AWS Marketplace at the time of limited listing publish."
+    Type: String
+  SubscriptionSNSTopic: 
+    Description: "If your product is SaaS subscriptions or SaaS contracts with subscription then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish."
+    Type: String
+  TypeOfSaaSListing: 
+    AllowedValues: 
+      - contracts_with_subscription
+      - contracts
+      - subscriptions
+    Default: contracts_with_subscription
+    Description: "Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value."
+    Type: String
+  WebsiteS3BucketName:
+    Type: String
+    Description: "S3 Bucket hosting the SaaS customer registration."
+  MarketplaceIntegrationApplicationARN:
+    Type: String
+    Description: "AWS Market Place integration application provided by AWS Market Place."
+  # Integration and Automation location parameters
+  ArtifactBucketName:
+    AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
+    ConstraintDescription: Staging bucket name can include numbers, lowercase
+      letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen
+      (-).
+    Default: aws-quickstart
+    # TODO: nitpick the name and wording here
+    Description: S3 bucket name for where the arifacts are housed. This string can include
+      numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start
+      or end with a hyphen (-).
+    Type: String
+Conditions:
+  CreateRegistrationWebPageCond: !Equals
+    - !Ref CreateRegistrationWebPage
+    - true
+
+Resources:
+  SampleApp:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://${ArtifactBucketName}.s3.amazonaws.com/cloudformation-aws-marketplace-saas/submodules/sam/packaged.yaml"
+      Parameters:
+        AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
+        CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
+        EntitlementSNSTopic: !Ref EntitlementSNSTopic
+        MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
+        NewSubscribersTableName: !Ref NewSubscribersTableName
+        ProductCode: !Ref ProductCode
+        SubscriptionSNSTopic: !Ref SubscriptionSNSTopic
+        TypeOfSaaSListing: !Ref TypeOfSaaSListing
+        WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue] 
+
