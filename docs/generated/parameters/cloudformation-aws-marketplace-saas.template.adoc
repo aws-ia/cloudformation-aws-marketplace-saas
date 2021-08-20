@@ -1,0 +1,15 @@
+
+.AWS Infrastructure and Automation configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Use custom name for the Metering Records Table or there is a default value
+(`AWSMarketplaceMeteringRecordsTableName`)|`AWSMarketplaceMeteringRecords`|Use custom name for the Metering Records Table or there is a default value.|If you do not want to create a registration page then select false, otherwise there is a default value
+(`CreateRegistrationWebPage`)|`true`|If you do not want to create a registration page then select false, otherwise there is a default value.|If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish.
+(`EntitlementSNSTopic`)|`**__Requires input__**`|If your product is SaaS Contracts then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish.|**NO_LABEL**
+(`MarketplaceTechAdminEmail`)|`**__Requires input__**`|NO_DESCRIPTION|Use custom name for the New Subscribers Table or there is a default value
+(`NewSubscribersTableName`)|`AWSMarketplaceSubscribers`|Use custom name for the New Subscribers Table or there is a default value.|Please use the product code provided from the AWS Marketplace at the time of limited listing publish.
+(`ProductCode`)|`**__Requires input__**`|Please use the product code provided from the AWS Marketplace at the time of limited listing publish.|If your product is SaaS subscriptions or SaaS contracts with subscription then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish.
+(`SubscriptionSNSTopic`)|`**__Requires input__**`|If your product is SaaS subscriptions or SaaS contracts with subscription then please use the entitlement SNS topic provided from the AWS Marketplace at the time of limited listing publish.|Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value
+(`TypeOfSaaSListing`)|`contracts_with_subscription`|Please use one of the allowed value for the SaaS pricing model depending on your product pricing model or there is a default value.|**NO_LABEL**
+(`WebsiteS3BucketName`)|`**__Requires input__**`|S3 Bucket hosting the SaaS customer registration.
+|===
