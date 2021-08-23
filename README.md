@@ -1,2 +1,3 @@
 # cloudformation-aws-marketplace-saas
-AWS Marketplace Build Tools
+AWS Marketplace SaaS Registration Portal integration
+
