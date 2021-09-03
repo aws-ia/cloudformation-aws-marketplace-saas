@@ -23,17 +23,9 @@ Metadata:
        default: "Select one of the allowed values for the SaaS pricing model of your product. Default value provided."
       WebsiteS3BucketName:
         default: ""
-      MarketplaceIntegrationApplicationARN:
-        default: "(Provided by AWS Market Place) ARN for Marketplace integration SAM app."
+      # AWS IA configuration
       ArtifactBucketName:
         default: Artifact S3 bucket name
-#    # AWS IA configuration
-#      QSS3BucketName:
-#        default: Quick Start S3 bucket name
-#      QSS3BucketRegion:
-#        default: Quick Start S3 bucket region
-#      QSS3KeyPrefix:
-#        default: Quick Start S3 key prefix
     ParameterGroups:
       - Label:
           default: AWS Infrastructure and Automation configuration
@@ -47,12 +39,10 @@ Metadata:
           - SubscriptionSNSTopic
           - TypeOfSaaSListing
           - WebsiteS3BucketName
-#     - Label:
-#        default: AWS Infrastructure and Automation configuration
-#      Parameters:
-#        - QSS3BucketName
-#        - QSS3KeyPrefix
-#        - QSS3BucketRegion
+      - Label:
+          default: AWS Infrastructure and Automation configuration
+        Parameters:
+         - ArtifactBucketName
 Parameters:
   AWSMarketplaceMeteringRecordsTableName: 
     Default: AWSMarketplaceMeteringRecords
@@ -92,9 +82,6 @@ Parameters:
   WebsiteS3BucketName:
     Type: String
     Description: "Provide the S3 bucket that will hold the static HTML registration page files. If this bucket does not exist it will be created"
-  MarketplaceIntegrationApplicationARN:
-    Type: String
-    Description: "AWS Market Place integration application provided by AWS Market Place."
   # Integration and Automation location parameters
   ArtifactBucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
