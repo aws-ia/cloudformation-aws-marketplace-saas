@@ -2,14 +2,6 @@
 .AWS Infrastructure and Automation configuration
 [width="100%",cols="16%,11%,73%",options="header",]
 |===
-|Parameter label (name) |Default value|Description|Use a custom value for this Metering Records Table. Value must be unique per product. Default value provided.
-(`AWSMarketplaceMeteringRecordsTableName`)|`AWSMarketplaceMeteringRecords`|Use a custom value for this Metering Records Table. Value must be unique per product. Default value provided.|A registration website page will be created and hosted via AWS CloudFront. If you have your own custom registration page select 'false'. Default value provided
-(`CreateRegistrationWebPage`)|`true`|A registration website page will be created and hosted via AWS CloudFront. If you have your own custom registration page select 'false'. Default value provided|If your product is a SaaS Contract use the entitelement SNS topic provided from AWS Marketplace at the time of limited listing publish.
-(`EntitlementSNSTopic`)|`**__Requires input__**`|If your product is a SaaS Contract use the entitelement SNS topic provided from AWS Marketplace at the time of limited listing publish.|**NO_LABEL**
-(`MarketplaceTechAdminEmail`)|`**__Requires input__**`|Provided the email address that will receive SNS notifications for new customer registrations, entitlement changes, and subscription events.|Use a custom value for the New Subscribers Table. Value must be unique per product. Default value provided.
-(`NewSubscribersTableName`)|`AWSMarketplaceSubscribers`|Use a custom value for the New Subscribers Table. Value must be unique per product. Default value provided.|Enter the product code provided from AWS Marketplace at the time of limited listing publish.
-(`ProductCode`)|`**__Requires input__**`|Enter the product code provided from AWS Marketplace at the time of limited listing publish.|If your product is a SaaS Subscription or Saas Contract with Subscription use the entitlement SNS topic provided from AWS Marketplace at the time of limited listing publish.
-(`SubscriptionSNSTopic`)|`**__Requires input__**`|If your product is a SaaS Subscription or Saas Contract with Subscription use the entitlement SNS topic provided from AWS Marketplace at the time of limited listing publish.|Select one of the allowed values for the SaaS pricing model of your product. Default value provided.
-(`TypeOfSaaSListing`)|`contracts_with_subscription`|Select one of the allowed values for the SaaS pricing model of your product. Default value provided.|**NO_LABEL**
-(`WebsiteS3BucketName`)|`**__Requires input__**`|Provide the S3 bucket that will hold the static HTML registration page files. If this bucket does not exist it will be created
+|Parameter label (name) |Default value|Description|Artifact S3 bucket name
+(`ArtifactBucketName`)|`aws-quickstart`|S3 bucket name for where the arifacts are housed. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).
 |===
