@@ -6,21 +6,21 @@ Metadata:
   AWS::CloudFormation::Interface:
     ParameterLabels:
       AWSMarketplaceMeteringRecordsTableName:
-        default: "Use a custom value for this Metering Records Table. Value must be unique per product. Default value provided."
+        default: "Metering Records DynamoDB Table Name"
       CreateRegistrationWebPage:
-        default: "A registration website page will be created and hosted via AWS CloudFront. If you have your own custom registration page select 'false'. Default value provided"
+        default: "Create Registration Page"
       EntitlementSNSTopic:
-        default: "If your product is a SaaS Contract use the entitelement SNS topic provided from AWS Marketplace at the time of limited listing publish."
+        default: "Entitlements SNS Topic ARN"
       MarketplaceTechAdminEmail:
-        default: ""
+        default: "Admin Email Address"
       NewSubscribersTableName:
-        default: "Use a custom value for the New Subscribers Table. Value must be unique per product. Default value provided."
+        default: "New Subscribers DynamoDB Table Name"
       ProductCode:
-        default: "Enter the product code provided from AWS Marketplace at the time of limited listing publish."
+        default: "Product Code"
       SubscriptionSNSTopic:
-        default: "If your product is a SaaS Subscription or Saas Contract with Subscription use the entitlement SNS topic provided from AWS Marketplace at the time of limited listing publish."
+        default: "Subscriptions SNS Topic ARN"
       TypeOfSaaSListing:
-       default: "Select one of the allowed values for the SaaS pricing model of your product. Default value provided."
+        default: "SaaS Pricing Model"
       WebsiteS3BucketName:
         default: ""
       # AWS IA configuration
@@ -30,49 +30,49 @@ Metadata:
       - Label:
           default: AWS Infrastructure and Automation configuration
         Parameters:
-          - AWSMarketplaceMeteringRecordsTableName
+          - TypeOfSaaSListing
           - CreateRegistrationWebPage
-          - EntitlementSNSTopic
-          - MarketplaceTechAdminEmail
-          - NewSubscribersTableName
+          - WebsiteS3BucketName
           - ProductCode
           - SubscriptionSNSTopic
-          - TypeOfSaaSListing
-          - WebsiteS3BucketName
+          - EntitlementSNSTopic
+          - NewSubscribersTableName
+          - AWSMarketplaceMeteringRecordsTableName
+          - MarketplaceTechAdminEmail
       - Label:
           default: AWS Infrastructure and Automation configuration
         Parameters:
-         - ArtifactBucketName
+          - ArtifactBucketName
 Parameters:
-  AWSMarketplaceMeteringRecordsTableName: 
+  AWSMarketplaceMeteringRecordsTableName:
     Default: AWSMarketplaceMeteringRecords
     Description: "Use a custom value for this Metering Records Table. Value must be unique per product. Default value provided."
     Type: String
-  CreateRegistrationWebPage: 
-    AllowedValues: 
+  CreateRegistrationWebPage:
+    AllowedValues:
       - "true"
       - "false"
     Default: "true"
     Description: "A registration website page will be created and hosted via AWS CloudFront. If you have your own custom registration page select 'false'. Default value provided"
     Type: String
-  EntitlementSNSTopic: 
+  EntitlementSNSTopic:
     Description: "If your product is a SaaS Contract use the entitelement SNS topic provided from AWS Marketplace at the time of limited listing publish."
     Type: String
-  MarketplaceTechAdminEmail: 
+  MarketplaceTechAdminEmail:
     Type: String
     Description: "Provided the email address that will receive SNS notifications for new customer registrations, entitlement changes, and subscription events."
-  NewSubscribersTableName: 
+  NewSubscribersTableName:
     Default: AWSMarketplaceSubscribers
     Description: "Use a custom value for the New Subscribers Table. Value must be unique per product. Default value provided."
     Type: String
-  ProductCode: 
+  ProductCode:
     Description: "Enter the product code provided from AWS Marketplace at the time of limited listing publish."
     Type: String
-  SubscriptionSNSTopic: 
+  SubscriptionSNSTopic:
     Description: "If your product is a SaaS Subscription or Saas Contract with Subscription use the entitlement SNS topic provided from AWS Marketplace at the time of limited listing publish."
     Type: String
-  TypeOfSaaSListing: 
-    AllowedValues: 
+  TypeOfSaaSListing:
+    AllowedValues:
       - contracts_with_subscription
       - contracts
       - subscriptions
