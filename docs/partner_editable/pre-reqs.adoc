@@ -1,3 +1,5 @@
 ==== Prepare for the deployment
 
 Ensure that you have the *Product Code* for your SaaS listing. This code is assigned to your SaaS listing on initial creation. It can be found in your https://aws.amazon.com/marketplace/management/products/saas[SaaS product catalog^] within the https://aws.amazon.com/marketplace/management/homepage?pageType=awsmpmp%3Acustomer [AWS Marketplace Management Portal^].
+
+Ensure that you have the relevant SNS topic ARN(s) for your pricing model. For contract pricing, you’ll need the Entitlements SNS Topic. For subscription pricing, you’ll need the Subscription SNS Topic. For contract plus subscriptions pricing, you’ll need both the Entitlements and Subscription SNS Topic ARNs.
