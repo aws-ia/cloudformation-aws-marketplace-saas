@@ -3,12 +3,10 @@
 |Resource |This deployment uses
 
 // Space needed to maintain table headers
-|VPCs |<n>
-|Elastic IP addresses |<n>
-|Security groups |<n>
-|AWS Identity and Access Management (IAM) roles |<n>
-|Auto Scaling groups |<n>
-|Application Load Balancers |<n>
-|Network Load Balancers |<n>
-|<type> instances |<n>
+|S3 Buckets |2
+|SNS Topics |2
+|DynamoDB Tables |2
+|Lambda Functions |7
+|API Gateway APIs |1
+|SQS Queues |3
 |===

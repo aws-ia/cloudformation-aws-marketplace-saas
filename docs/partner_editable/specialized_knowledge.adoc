@@ -3,4 +3,7 @@
 // Include links if helpful. 
 // You don't need to list AWS services or point to general info about AWS; the boilerplate already covers this.
 
-This Quick Start also assumes familiarity with <knowledge expectations specific to this Quick Start>.
+
+This deployment guide requires a moderate level of familiarity with AWS services. If you’re new to AWS, visit the Getting Started Resource Center Getting Started Resource Center (https://aws.amazon.com/getting-started/).
+
+This Quick Start also assumes familiarity with AWS Marketplace and the SaaS product listing process. An existing SaaS listing and the associated product code is required to complete the deployment. To familiarize yourself with the SaaS listing processes, please visit the Software as a service (SaaS)–based products (https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html) portion of the AWS Marketplace Seller Guide https://docs.aws.amazon.com/marketplace/latest/userguide/what-is-marketplace.html[AWS Marketplace Seller Guide^].
