@@ -1,9 +1,10 @@
 // Edit this placeholder text to accurately describe your architecture.
 
-This Quick Start provides two deployment options:
+This Quick Start provides three deployment options:
 
-* *Deploy {partner-product-short-name} into a new VPC*. This option builds a new AWS environment consisting of the VPC, subnets, NAT gateways, security groups, bastion hosts, and other infrastructure components. It then deploys {partner-product-short-name} into this new VPC.
-* *Deploy {partner-product-short-name} into an existing VPC*. This option provisions {partner-product-short-name} in your existing AWS infrastructure.
+1. In the case of contracts_with_subscription all of the resources depicted on the architecture diagram are created. This includes deployment option provides the required service to manage both contract entitlements and metered usage.
+2. In the case of a contracts, only resources necessary to manage contract entitlements are deployed.
+3. In the case of a subscriptions, only resources necessary to manage subscription based metered usage are deployed.
 
-The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and {partner-product-short-name} settings, as discussed later in this guide.
 
+The Quick Start provides a single source template that handles all three deployment configurations.
