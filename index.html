@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.15">
-<title>Example Product Name on the AWS Cloud</title>
+<meta name="generator" content="Asciidoctor 2.0.16">
+<title>AWS Marketplace Serverless SaaS Integration on the AWS Cloud</title>
 <style>
 
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -825,7 +825,7 @@ p.footer-text a{color:#d7d8d8}
 <div id="toctitle"></div>
 <ul class="sectlevel1">
 <li><a href="#_overview">Overview</a></li>
-<li><a href="#_example_product_name_on_aws">Example Product Name on AWS</a></li>
+<li><a href="#_aws_marketplace_serverless_saas_integration_on_aws">AWS Marketplace Serverless SaaS Integration on AWS</a></li>
 <li><a href="#_aws_costs">AWS costs</a></li>
 <li><a href="#_software_licenses">Software licenses</a></li>
 <li><a href="#_architecture">Architecture</a></li>
@@ -842,11 +842,7 @@ p.footer-text a{color:#d7d8d8}
 <li><a href="#_launch_the_quick_start">Launch the Quick Start</a></li>
 </ul>
 </li>
-<li><a href="#_test_the_deployment">Test the deployment</a></li>
 <li><a href="#_post_deployment_steps">Post-deployment steps</a></li>
-<li><a href="#_best_practices_for_using_example_product_name_on_aws">Best practices for using Example Product Name on AWS</a></li>
-<li><a href="#_security">Security</a></li>
-<li><a href="#_other_useful_information">Other useful information</a></li>
 <li><a href="#_faq">FAQ</a></li>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
 <li><a href="#_customer_responsibility">Customer responsibility</a></li>
@@ -865,7 +861,7 @@ p.footer-text a{color:#d7d8d8}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<h2 id="_example_product_name_on_the_aws_cloud" class="discrete text-center">Example Product Name on the AWS Cloud</h2>
+<h2 id="_aws_marketplace_serverless_saas_integration_on_the_aws_cloud" class="discrete text-center">AWS Marketplace Serverless SaaS Integration on the AWS Cloud</h2>
 <h2 id="_quick_start_reference_deployment" class="discrete text-left text-center">Quick Start Reference Deployment</h2>
 <div class="imageblock text-center">
 <div class="content">
@@ -883,8 +879,8 @@ p.footer-text a{color:#d7d8d8}
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph text-center">
-<p><strong>Month of launch or significant update (spelled out) Year</strong><br>
-<em>Toni Jones, AWS Quick Start team</em></p>
+<p><strong>September 2021</strong><br>
+<em>AWS Marketplace SaaS Integration team</em></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -903,7 +899,7 @@ report bugs, or submit feature ideas for this Quick Start.
 </table>
 </div>
 <div class="paragraph text-left">
-<p>This Quick Start was created by Example Company Name, Ltd. in collaboration with Amazon Web Services (AWS). <a href="http://aws.amazon.com/quickstart/" target="_blank" rel="noopener">Quick Starts</a> are automated reference deployments that use AWS CloudFormation templates to deploy key technologies on AWS, following AWS best practices.</p>
+<p>This Quick Start was created by Amazon Web Services (AWS). <a href="http://aws.amazon.com/quickstart/" target="_blank" rel="noopener">Quick Starts</a> are automated reference deployments that use AWS CloudFormation templates to deploy key technologies on AWS, following AWS best practices.</p>
 </div>
 </div>
 </div>
@@ -920,30 +916,18 @@ report bugs, or submit feature ideas for this Quick Start.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>This guide provides instructions for deploying the Example Product Name Quick Start reference architecture on the AWS Cloud.</p>
+<p>This guide provides instructions for deploying the Serverless SaaS Integration Solution on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start is for users who &lt;target audience and usage scenario&gt;</p>
+<p>This Quick Start is for registered AWS Marketplace sellers who are looking for a simple and lighweight serverless solution for completing the required integration on new SaaS listings.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Amazon may share user-deployment information with the AWS Partner that collaborated with AWS on the Quick Start.
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_example_product_name_on_aws">Example Product Name on AWS</h2>
+<h2 id="_aws_marketplace_serverless_saas_integration_on_aws">AWS Marketplace Serverless SaaS Integration on AWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/product_description.adoc</code></strong></em></p>
@@ -955,7 +939,91 @@ Amazon may share user-deployment information with the AWS Partner that collabora
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>&lt;Describe how the software works on AWS.&gt;</p>
+<p>The AWS Marketplace Serverless SaaS Integration solution fulfills the core capabilities required to successfully integrate a vendor SaaS solution with it’s corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.</p>
+</div>
+<div class="paragraph">
+<p><strong>Register new customers</strong></p>
+</div>
+<div class="paragraph">
+<p>With SaaS subscriptions and SaaS contracts, your customers subscribe to your products through AWS Marketplace, but access the product on environment you manage in your AWS account. After subscribing to the product, your customer is directed to a product registration page you create and manage as a part of your SaaS product. On your software’s registration page, you collect whatever information is required to create an account for the customer. AWS Marketplace recommends collecting your customer’s email addresses if you plan to contact them through email for usage notifications.
+The registration page needs to be able to identify and accept the x-amzn-marketplace-token token in the form data from AWS Marketplace with the customer’s identiﬁer for billing. It should then pass that token value to the AWS Marketplace Metering Service and AWS Marketplace Entitlement Service APIs to resolve for the unique customer identiﬁer and corresponding product code.</p>
+</div>
+<div class="paragraph">
+<p>This solution creates a static HTML registration page hosted on S3 which takes the users inputs defined in the html form and submits them to marketplace/customer endpoint. This page is delivered via a CloudFront Distribution, which can be configured to use domain/CNAME by your choice. The POST request coming from AWS Marketplace is intercepted by the Edge <code>src/lambda-edge/edge-redirect.js</code>, which transforms the POST request to GET request, and passes the x-amzn-marketplace-token in the query string. The handler for the marketplace/customer endpoint is defined in the <code>src/register-new-subscriber.js</code> file, where we call the resolveCustomer and validate the token. If the token is valid the customer record is created in the <code>AWSMarketplaceSubscribers</code> DynamoDB table and the new customer data are stored.</p>
+</div>
+<div class="paragraph">
+<p><strong>Grant access to new subscribers</strong></p>
+</div>
+<div class="paragraph">
+<p>Once the <code>resolveCustomer</code> endpoint returns a successful response, you as the SaaS provider will need to provide access to the solution to the new subscriber. Based on the type of listing, contract or subscriptions, we have defined different conditions in the grant-revoke-access-to-product.js stream handler that is executed on adding new or updating existing rows.
+In this implementation the Marketplace Tech Admin email address (defined as deployment parameter), will receive email notification when new services needs to be provisioned or existing services needs to be updated for a customer. AWS Marketplace strongly recommends automating the access and environment management which can be achieved by modifying the grant-revoke-access-to-product.js function. The property <strong>successfully subscribed</strong> is set when a successful response is returned by the SQS entitlement handler for SaaS Contract based listings or for Subscriptions baed listings, after receiving <strong>subscribe-success</strong> message from the Subscription SNS Topic in the subscription-sqs-handler.js.</p>
+</div>
+<div class="paragraph">
+<p><strong>Updating entitlement levels to new and existing subscribers (SaaS Contracts only)</strong></p>
+</div>
+<div class="paragraph">
+<p>If a customer’s entitlement changes, a message is received on the Entitlements SNS topic. On each new messag, the lambda function entitlement-sqs.js calls the marketplace EntitlementService and stores the response in the <code>AWSMarketplaceSubscribers</code> DynamoDB table. When the entitlement is update notification is sent to the MarketplaceTechAdmin email address.</p>
+</div>
+<div class="paragraph">
+<p><strong>Revoking access to customers with expired contracts and cancelled subscriptions</strong></p>
+</div>
+<div class="paragraph">
+<p>The revoke access logic is implemented in a similar manner as the grant access logic. The MarketplaceTechAdmin address receives an email when the contract expires or the subscription is cancelled. AWS Marketplace strongly recommends automating the access and environment management which can be achieved by modifying the grant-revoke-access-to-product.js function.</p>
+</div>
+<div class="paragraph">
+<p><strong>Metering for usage</strong></p>
+</div>
+<div class="paragraph">
+<p>For SaaS subscriptions listings, the SaaS vendor must meter for all usage and report the metering record to AWS Marketplace, which then bills customers based on the records provided. For SaaS contracts, the vendor only meter for usage beyond a customer’s contract entitlements. The SaaS provider must send AWS a quantity of usage accrued for each customer on the dimensions defined when you created your product, such as gigabytes transferred or hosts scanned in a given hour.</p>
+</div>
+<div class="paragraph">
+<p>The MeteringSchedule CloudWatch Event rule is triggered every hour. The metering-hourly-job.js then queries all of the pending/unreported metering records from the <code>AWSMarketplaceMeteringRecords</code> table using the PendingMeteringRecordsIndex. All of the pending records are aggregated based on the customerIdentifier and dimension name, and sent to the SQSMetering queue. The records in the <code>AWSMarketplaceMeteringRecords</code> table are expected to be inserted programmatically by your SaaS application. In this case you will have to give permissions to the service in charge of collecting usage data in your existing SaaS product to be able to write to the <code>AWSMarketplaceMeteringRecords</code> table.
+The lambda function metering-sqs.js sends all of the queued metering records to the AWS marketplace Metering API. After every call to the batchMeterUsage endpoint, the rows in the <code>AWSMarketplaceMeteringRecords</code> table are updated with the response returned from the Metering Service, which can be found in the metering_response field. If the request was unsuccessful the metering_failed value with be set to true and you will have to investigate the issue the error will be also stored in the metering_response field.</p>
+</div>
+<div class="paragraph">
+<p>The lambda function metering-sqs.js sends all of the queued metering records to the AWS marketplace Metering API. After every call to the batchMeterUsage endpoint, the rows in the <code>AWSMarketplaceMeteringRecords</code> table are updated with the response returned from the Metering Service, which can be found in the metering_response field. If the request was unsuccessful the metering_failed value with be set to true and you will have to investigate the issue the error will be also stored in the metering_response field.</p>
+</div>
+<div class="paragraph">
+<p>The new records in the <code>AWSMarketplaceMeteringRecords</code> table should be stored in the following format:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "create_timestamp": 113123,
+  "customerIdentifier": "ifAPi5AcF3",
+  "dimension_usage": [
+    {
+      "dimension": "users",
+      "value": 3
+    },
+     {
+      "dimension": "admin_users",
+      "value": 1
+    }
+  ],
+  "metering_pending": "true"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where the create_timestamp is the sort key and customerIdentifier is the partition key, both forming the Primary key.
+After the record is submitted to AWS Marketplace API, it will be updated and entry will look like this.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+   "create_timestamp": 113123,
+   "customerIdentifier": "ifAPi5AcF3",
+   "dimension_usage": [
+     {
+       "dimension": "admin_users",
+       "value": 3
+     }
+   ],
+   "metering_failed": false,
+   "metering_response": "{\"Results\":[{\"UsageRecord\":{\"Timestamp\":\"2020-06-24T04:04:53.776Z\",\"CustomerIdentifier\":\"ifAPi5AcF3\",\"Dimension\":\"admin_users\",\"Quantity\":3},\"MeteringRecordId\":\"35155d37-56cb-423f-8554-5c4f3e3ff56d\",\"Status\":\"Success\"}],\"UnprocessedRecords\":[]}"
+ }</pre>
+</div>
 </div></div></td>
 </tr>
 </tbody>
@@ -1002,19 +1070,7 @@ After you deploy the Quick Start, create <a href="https://docs.aws.amazon.com/aw
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><em>&lt;Example 1&gt;No licenses are required to deploy this Quick Start. All AWS service resources consumed during the launch of the Quick Start incur AWS service usage costs.</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;Example 2&gt;Some configurations of the Example Product Name Quick Start involve the use of third-party software. You are responsible for obtaining a license directly from the software vendor.</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;Example 3&gt;This Quick Start requires a license for Example Product Name. To use the Quick Start in your production environment, sign up for a license at &lt;link&gt;. When you launch the Quick Start, place the license key in an S3 bucket and specify its location.</em></p>
-</div>
-<div class="paragraph">
-<p><em>If you don’t have a license, the Quick Start deploys with a trial license. The trial license gives you &lt;n&gt; days of free usage in a non-production environment. After this time, you can upgrade to a production license by following the instructions at &lt;link&gt;.</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;AMI information&gt;The Quick Start requires a subscription to the Amazon Machine Image (AMI) for Example Product Name, which is available from <a href="https://aws.amazon.com/marketplace/" target="_blank" rel="noopener">AWS Marketplace</a>. Additional pricing, terms, and conditions may apply. For instructions, see <a href="#step-2.-subscribe-to-the-software-ami">step 2</a> in the deployment section.</em></p>
+<p>No licenses are required to deploy this Quick Start. All AWS service resources consumed during the launch of the Quick Start incur AWS service usage costs.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1034,15 +1090,14 @@ After you deploy the Quick Start, create <a href="https://docs.aws.amazon.com/aw
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Deploying this Quick Start for a new virtual private cloud (VPC) with
-default parameters builds the following Example Product Name environment in the
+<p>Deploying this Quick Start builds the following AWS Marketplace Serverless SaaS Integration environment in the
 AWS Cloud.</p>
 </div>
 <div id="architecture1" class="imageblock">
 <div class="content">
 <img src="images/architecture_diagram.png" alt="Architecture">
 </div>
-<div class="title">Figure 1. Quick Start architecture for Example Product Name on AWS</div>
+<div class="title">Figure 1. Quick Start architecture for AWS Marketplace Serverless SaaS Integration on AWS</div>
 </div>
 <div class="paragraph">
 <p>As shown in <a href="#architecture1">Figure 1</a>, the Quick Start sets up the following:</p>
@@ -1050,47 +1105,15 @@ AWS Cloud.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>A highly available architecture that spans two Availability Zones.*</p>
+<p>A CloudFront Distribution of the HTML based customer registration page.*</p>
 </li>
 <li>
-<p>A VPC configured with public and private subnets, according to AWS
-best practices, to provide you with your own virtual network on AWS.*</p>
+<p>An Amazon API Gateway connecting registration page to the new subscriber services.*</p>
 </li>
 <li>
-<p>In the public subnets:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Managed network address translation (NAT) gateways to allow outbound
-internet access for resources in the private subnets.*</p>
-</li>
-<li>
-<p>A Linux bastion host in an Auto Scaling group to allow inbound Secure
-Shell (SSH) access to EC2 instances in public and private subnets.*</p>
+<p>DynamoDB Tables to store the GetEntitlements responses and metering records.*</p>
 </li>
 </ul>
-</div>
-</li>
-<li>
-<p>In the private subnets:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>&lt;item&gt;.</p>
-</li>
-<li>
-<p>&lt;item&gt;.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>&lt;describe any additional components&gt;.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="small">* The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</span></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1118,7 +1141,10 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>This Quick Start also assumes familiarity with &lt;knowledge expectations specific to this Quick Start&gt;.</p>
+<p>This deployment guide requires a moderate level of familiarity with AWS services. If you’re new to AWS, visit the Getting Started Resource Center Getting Started Resource Center (<a href="https://aws.amazon.com/getting-started/" class="bare">https://aws.amazon.com/getting-started/</a>).</p>
+</div>
+<div class="paragraph">
+<p>This Quick Start also assumes familiarity with AWS Marketplace and the SaaS product listing process. An existing SaaS listing and the associated product code is required to complete the deployment. To familiarize yourself with the SaaS listing processes, please visit the Software as a service (SaaS)–based products (<a href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html" class="bare">https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html</a>) portion of the AWS Marketplace Seller Guide <a href="https://docs.aws.amazon.com/marketplace/latest/userguide/what-is-marketplace.html" target="_blank" rel="noopener">AWS Marketplace Seller Guide</a>.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1160,36 +1186,28 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VPCs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3 Buckets</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Elastic IP addresses</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SNS Topics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security groups</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DynamoDB Tables</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AWS Identity and Access Management (IAM) roles</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lambda Functions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Auto Scaling groups</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API Gateway APIs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Application Load Balancers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Network Load Balancers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;type&gt; instances</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;n&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQS Queues</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 </tr>
 </tbody>
 </table>
@@ -1207,10 +1225,7 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>us-east-1, US East (N. Virginia) (EXAMPLE)</p>
-</li>
-<li>
-<p>us-east-2, US East (Ohio) (EXAMPLE)</p>
+<p>us-east-1, US East (N. Virginia)</p>
 </li>
 </ul>
 </div>
@@ -1245,27 +1260,16 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <td class="tableblock halign-left valign-top"><div class="content"><div id="toc" class="toc">
 <div id="toctitle"></div>
 <ul class="sectlevel3">
-<li><a href="#_prepare_your_aws_account">Prepare your AWS account</a></li>
-<li><a href="#_prepare_your_example_company_name_ltd_account">Prepare your Example Company Name, Ltd. account</a></li>
 <li><a href="#_prepare_for_the_deployment">Prepare for the deployment</a></li>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_prepare_your_aws_account">Prepare your AWS account</h4>
-<div class="paragraph">
-<p><em>Describe any setup required in the AWS account prior to template launch</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_prepare_your_example_company_name_ltd_account">Prepare your Example Company Name, Ltd. account</h4>
-<div class="paragraph">
-<p><em>Describe any setup required in the partner portal/account prior to template launch</em></p>
-</div>
-</div>
-<div class="sect3">
 <h4 id="_prepare_for_the_deployment">Prepare for the deployment</h4>
 <div class="paragraph">
-<p><em>Describe any preparation required to complete the product build, such as obtaining licenses or placing files in S3</em></p>
+<p>Ensure that you have the <strong>Product Code</strong> for your SaaS listing. This code is assigned to your SaaS listing on initial creation. It can be found in your <a href="https://aws.amazon.com/marketplace/management/products/saas" target="_blank" rel="noopener">SaaS product catalog</a> within the <a href="https://aws.amazon.com/marketplace/management/homepage?pageType=awsmpmp%3Acustomer" class="bare">https://aws.amazon.com/marketplace/management/homepage?pageType=awsmpmp%3Acustomer</a> [AWS Marketplace Management Portal^].</p>
+</div>
+<div class="paragraph">
+<p>Ensure that you have the relevant SNS topic ARN(s) for your pricing model. For contract pricing, you’ll need the Entitlements SNS Topic. For subscription pricing, you’ll need the Subscription SNS Topic. For contract plus subscriptions pricing, you’ll need both the Entitlements and Subscription SNS Topic ARNs.</p>
 </div>
 </div></div></td>
 </tr>
@@ -1284,20 +1288,23 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>This Quick Start provides two deployment options:</p>
+<p>This Quick Start provides three deployment options:</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><strong>Deploy Example Product Name into a new VPC</strong>. This option builds a new AWS environment consisting of the VPC, subnets, NAT gateways, security groups, bastion hosts, and other infrastructure components. It then deploys Example Product Name into this new VPC.</p>
+<p>In the case of contracts_with_subscription all of the resources depicted on the architecture diagram are created. This includes deployment option provides the required service to manage both contract entitlements and metered usage.</p>
 </li>
 <li>
-<p><strong>Deploy Example Product Name into an existing VPC</strong>. This option provisions Example Product Name in your existing AWS infrastructure.</p>
+<p>In the case of a contracts, only resources necessary to manage contract entitlements are deployed.</p>
 </li>
-</ul>
+<li>
+<p>In the case of a subscriptions, only resources necessary to manage subscription based metered usage are deployed.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Example Product Name settings, as discussed later in this guide.</p>
+<p>The Quick Start provides a single source template that handles all three deployment configurations.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1318,7 +1325,7 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Sign in to your AWS account at <a href="https://aws.amazon.com" class="bare">https://aws.amazon.com</a> with an IAM user role that has the necessary permissions. For details, see <a href="#_planning_the_deployment">Planning the deployment</a> earlier in this guide.</p>
+<p>Sign in to your AWS seller account at <a href="https://aws.amazon.com" class="bare">https://aws.amazon.com</a> with an IAM user role that has the necessary permissions. For details, see <a href="#_planning_the_deployment">Planning the deployment</a> earlier in this guide.</p>
 </li>
 <li>
 <p>Make sure that your AWS account is configured correctly, as discussed in the <a href="#_technical_requirements">Technical requirements</a> section.</p>
@@ -1335,18 +1342,18 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If you’re deploying Example Product Name into an existing VPC, make sure that your VPC has two private subnets in different Availability Zones for the workload instances and that the subnets aren’t shared. This Quick Start doesn’t support <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html" target="_blank" rel="noopener">shared subnets</a>. These subnets require <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html" target="_blank" rel="noopener">NAT gateways</a> in their route tables to allow the instances to download packages and software without exposing them to the internet. Also make sure that the domain name option in the DHCP options is configured as explained in <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html" target="_blank" rel="noopener">DHCP options sets</a>. You provide your VPC settings when you launch the Quick Start.
+Ensure that your are signed into you seller account. This is the AWS account that you would have used to register with AWS Marketplace. This is necessary to access the various SNS topics and APIs that the solution is dependent on.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Each deployment takes about 15 minutes / 60 minutes / 1.5 hours to complete.</p>
+<p>Each deployment takes about 5-10 minutes to complete.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Sign in to your AWS account, and choose one of the following options to launch the AWS CloudFormation template. For help with choosing an option, see <a href="#_deployment_options">Deployment options</a> earlier in this guide.</p>
+<p>Sign in to your AWS account, and click on the "Deploy" link below to launch the AWS CloudFormation template. For help understanding what is being deployed, see <a href="#_deployment_options">Deployment options</a> earlier in this guide.</p>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 75%;">
@@ -1354,18 +1361,14 @@ If you’re deploying Example Product Name into an existing VPC, make sure that 
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_launch_permalink" target="_blank" rel="noopener">Deploy Example Product Name into a new VPC on AWS</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_template_permalink" target="_blank" rel="noopener">View template</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_launch_permalink" target="_blank" rel="noopener">Deploy Example Product Name into an existing VPC on AWS</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_launch_permalink" target="_blank" rel="noopener">Deploy AWS Marketplace Serverless SaaS Integration into a new VPC on AWS</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_template_permalink" target="_blank" rel="noopener">View template</a></p></td>
 </tr>
 </tbody>
 </table>
 </li>
 <li>
-<p>Check the AWS Region that’s displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where you build the network infrastructure. The template is launched in the us-east-1 Region by default. For other choices, see <a href="#_supported_regions">Supported Regions</a> earlier in this guide.</p>
+<p>Check the AWS Region that’s displayed in the upper-right corner of the navigation bar, and change it if necessary. The template is launched in the us-east-1 Region by default. For other choices, see <a href="#_supported_regions">Supported Regions</a> earlier in this guide.</p>
 </li>
 <li>
 <p>On the <strong>Create stack</strong> page, keep the default setting for the template URL, and then choose <strong>Next</strong>.</p>
@@ -1384,7 +1387,7 @@ If you’re deploying Example Product Name into an existing VPC, make sure that 
 . On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you’re finished, choose <strong>Next</strong>.
 . On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select the two check boxes to acknowledge that the template creates IAM resources and might require the ability to automatically expand macros.
 . Choose <strong>Create stack</strong> to deploy the stack.
-. Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the Example Product Name deployment is ready.
+. Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the AWS Marketplace Serverless SaaS Integration deployment is ready.
 . To view the created resources, see the values displayed in the <strong>Outputs</strong> tab for the stack.</p>
 </div>
 <div class="paragraph">
@@ -1395,38 +1398,38 @@ If you’re deploying Example Product Name into an existing VPC, make sure that 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_test_the_deployment">Test the deployment</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
 <h2 id="_post_deployment_steps">Post-deployment steps</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_best_practices_for_using_example_product_name_on_aws">Best practices for using Example Product Name on AWS</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p><em>Add any best practices for using the software.</em></p>
+<p><strong>Connecting your Cloudfront Distribution to API Gateway</strong></p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_security">Security</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p><em>Add any security-related information.</em></p>
+<p>To connect the Cloudfront Distribution of the registration page, you’ll need to update the baseUrl in web/script.js with the API Gateway endpoint URL.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Retrieve the ID of the API you just deployed from <a href="https://console.aws.amazon.com/apigateway/main/apis?region=us-east-1" target="_blank" rel="noopener">API Gateway</a>.</p>
+</li>
+<li>
+<p>Update the baseUrl in the /web/scripts.js with the the API ID you just retrieved. This file is located within the s3://&lt;WEBSITE_BUCKET_NAME&gt;/ bucket, where WEBSITE_BUCKET_NAME is a deployment parameter you define. Please reference the before and after example below. Save the change.<br>
+<strong>Before</strong>: <code>const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';</code><br>
+<strong>After</strong>: <code>const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';</code></p>
+</li>
+<li>
+<p>If using an IDE, you can update S3 with 'aws s3 cp ./web/ s3://&lt;WEBSITE_BUCKET_NAME&gt;/ --recursive'</p>
+</li>
+</ol>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_other_useful_information">Other useful information</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p><em>Add any other details that will help the customer use the software on AWS.</em></p>
+<p><strong>Confirm SNS Subscription</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>To receive email notifications on the MarketplaceTechAdmin email address for subscription events, you’ll need to confirm the subscription to the newly deployed SNS topic. The easiest way to do this is to click on the confirmation link that should have been sent to the MarketplaceTechAdmin email address during deployment.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/faq_troubleshooting.adoc</code></strong></em></p>
@@ -1441,7 +1444,7 @@ If you’re deploying Example Product Name into an existing VPC, make sure that 
 <p><strong>Q.</strong> I encountered a <strong>CREATE_FAILED</strong> error when I launched the Quick Start.</p>
 </div>
 <div class="paragraph">
-<p><strong>A.</strong> If AWS CloudFormation fails to create the stack, relaunch the template with <strong>Rollback on failure</strong> set to <strong>Disabled</strong>. This setting is under <strong>Advanced</strong> in the AWS CloudFormation console on the <strong>Configure stack options</strong> page. With this setting, the stack’s state is retained, and the instance keeps running so that you can troubleshoot the issue. (For Windows, look at the log files in <code>%ProgramFiles%\Amazon\EC2ConfigService</code> and <code>C:\cfn\log</code>.)</p>
+<p><strong>A.</strong> If AWS CloudFormation fails to create the stack, relaunch the template with <strong>Rollback on failure</strong> set to <strong>Disabled</strong>. This setting is under <strong>Advanced</strong> in the AWS CloudFormation console on the <strong>Configure stack options</strong> page. With this setting, the stack’s state is retained so that you can troubleshoot the issue.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -1469,8 +1472,18 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 <div class="sect1">
 <h2 id="_troubleshooting">Troubleshooting</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>&lt;Steps for troubleshooting the deployment.&gt;</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure that you are deploying in a supported region (see <a href="#_supported_regions">Supported Regions</a>)</p>
+</li>
+<li>
+<p>Ensure that you are deploying into your registered seller account.</p>
+</li>
+<li>
+<p>Ensure that the names assigned for WebsiteS3BucketName, NewSubscribersTableName, and AWSMarketplaceMeteringRecordsTableName don&#8217;t already exist within S3 and DynamoDB.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -1567,16 +1580,16 @@ and to share your customizations with others.</p>
 </div>
 <p class="footer-text">
 <!-- We can use document attributes: -->
-<!-- Generated with Asciidoctor v2.0.15. -->
-<a href="https://aws.amazon.com/privacy/">Privacy</a> | <a href="https://aws.amazon.com/terms/">Site terms</a> | &copy; 2021, Amazon Web Services, Inc. or its affiliates and Example Company Name, Ltd.. All rights reserved.
+<!-- Generated with Asciidoctor v2.0.16. -->
+<a href="https://aws.amazon.com/privacy/">Privacy</a> | <a href="https://aws.amazon.com/terms/">Site terms</a> | &copy; 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.
 </p>
 </body>
 </html>
 <!--
 repo commit:
-03aa0b82925d65fcf5d30ed06b9853919a1b5d42
+523f8251d816f2b158bb9f23a45b472f38567c23
 
 submodule config:
  81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (remotes/origin/swingline-test-4-g81ea0b6)
- 4c943a04792111b4d8f527d9e34b8002f25a30b0 submodules/sam (remotes/origin/template-optional-params-fix-28-g4c943a0)
+ 4c943a04792111b4d8f527d9e34b8002f25a30b0 submodules/sam (4c943a0)
 -->
