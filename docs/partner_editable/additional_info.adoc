@@ -25,11 +25,11 @@ After the *resolveCustomer* endpoint returns a successful response, you (the Saa
 
 In the Quick Start deployment, the AWS Marketplace Tech Admin email address (which is defined as the *MarketplaceTechAdmin* deployment parameter) receives email notifications when new services must be provisioned or existing services must be updated for a customer. AWS Marketplace strongly recommends automating the access and environment management by modifying the *grant-revoke-access-to-product.js* function. The property *successfully subscribed* is set when a successful response is returned by the Amazon Simple Queue Service (Amazon SQS) entitlement handler for SaaS contract-based listings or for subscriptions-based listings after receiving the *subscribe-success* message from the subscription Amazon Simple Notification Service (Amazon SNS) topic in the *subscription-sqs-handler.js* function.
 
-=== Updating entitlement levels to new and existing subscribers (SaaS contracts only)
+=== Update entitlement levels to new and existing subscribers (SaaS contracts only)
 
 If a customer’s entitlement changes, a message is received on the Amazon SNS topic for the entitlement. On each new message, the *entitlement-sqs.js* Lambda function calls the AWS Marketplace *EntitlementService* endpoint and stores the response in the *AWSMarketplaceSubscribers* DynamoDB table. When the entitlement is updated, a notification is sent to the AWS Marketplace Tech Admin email address.
 
-=== Revoking access to customers with expired contracts and canceled subscriptions
+=== Revoke access to customers with expired contracts and canceled subscriptions
 
 The revoke-access logic is implemented in a similar way as the grant-access logic. The AWS Marketplace Tech Admin address receives an email when the contract expires or the subscription is canceled. AWS Marketplace strongly recommends automating the access and environment management by modifying the *grant-revoke-access-to-product.js* function.
 
