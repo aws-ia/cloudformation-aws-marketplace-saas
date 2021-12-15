@@ -10,6 +10,7 @@ AWS Cloud.
 image::../images/cloudformation-aws-marketplace-saas-architecture-diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following:
+
 * AWS Marketplace for managing subscriptions and passing tokens with customer billing identifiers and product codes to AWS Marketplace Metering Service and Entitlement Service APIs. 
 * Amazon CloudFront for providing the configurable URL for the SaaS product integration.
 * CloudFront Lambda@Edge for intercepting, transforming, and passing customer tokens.
