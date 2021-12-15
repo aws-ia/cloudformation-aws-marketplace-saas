@@ -2,6 +2,6 @@
 // Identify your target audience and explain how/why they would use this Quick Start.
 //Avoid borrowing text from third-party websites (copying text from AWS service documentation is fine). Also, avoid marketing-speak, focusing instead on the technical aspect.
 
-This guide provides instructions for deploying the Serverless SaaS Integration Solution on the AWS Cloud.
+This guide provides instructions for deploying {partner-product-short-name} on the AWS Cloud.
 
-This Quick Start is for registered AWS Marketplace sellers who are looking for a simple and lighweight serverless solution for completing the required integration on new SaaS listings.
+This Quick Start is for registered AWS Marketplace sellers who are looking for a simple and lightweight serverless solution for completing the required integration on new software as a service (SaaS) listings.
