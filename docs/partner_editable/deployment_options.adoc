@@ -2,7 +2,7 @@
 
 This Quick Start provides the following deployment options:
 
-* A full deployment option that supports both contracts and subscriptions. This deployment provides all required services to manage both contract entitlements and metered usage.
+* A full deployment option that supports both contracts and subscriptions. This option provides all required services to manage both contract entitlements and metered usage.
 * A contracts-only deployment that provides only the resources required to manage contract entitlements.
 * A subscriptions-only deployment that provides only the resources required to manage subscription-based metered usage.
 

@@ -1,4 +1,4 @@
-This Quick Start supports the following Regions:
+This Quick Start supports the following Region:
 
 * us-east-1, US East (N. Virginia)
 

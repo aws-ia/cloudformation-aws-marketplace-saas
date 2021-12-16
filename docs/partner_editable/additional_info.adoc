@@ -3,11 +3,12 @@
 
 == How it works
 // If steps are required to test the deployment, add them here. If not, remove the heading
+
+As shown in <<architecture2>>,the {partner-product-short-name} on AWS environment sets up the following workflow of events. 
+
 [#architecture2]
 .Workflow of {partner-product-short-name} on AWS environment
 image::../images/cloudformation-aws-marketplace-saas-workflow-of-events.png[Workflow]
-
-As shown in <<architecture2>>,the {partner-product-short-name} on AWS environment sets up the following workflow of events. 
 
 === Register new customers
 

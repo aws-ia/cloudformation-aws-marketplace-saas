@@ -24,9 +24,9 @@ WARNING: Ensure that your are signed into you seller account. This is the AWS ac
 
 Each deployment takes about {deployment_time} to complete.
 
-. Sign in to your AWS account, and choose the following link to launch the AWS CloudFormation template. For help understanding the details of the deployment, see link:#_deployment_options[Deployment options] earlier in this guide.
+. Sign in to your AWS account, and launch the following AWS CloudFormation template. For help understanding the details of the deployment, see link:#_deployment_options[Deployment options] earlier in this guide.
 +
-[cols="1,1"]
+[cols="2,1"]
 |===
 ^|http://qs_launch_permalink[Deploy {partner-product-short-name} into a new VPC on AWS^]
 ^|http://qs_template_permalink[View template^]
