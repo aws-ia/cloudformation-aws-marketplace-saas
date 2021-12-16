@@ -2,4 +2,4 @@
 // Briefly describe the software. Use consistent and clear branding. 
 // Include the benefits of using the software on AWS, and provide details on usage scenarios.
 
-The {partner-product-short-name} deployment fulfills the core capabilities required to successfully integrate a vendor SaaS solution with its corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.
+The {partner-product-short-name} deployment fulfills the core capabilities required to successfully integrate a vendor's SaaS solution with its corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.
