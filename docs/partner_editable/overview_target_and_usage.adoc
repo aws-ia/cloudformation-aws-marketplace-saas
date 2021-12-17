@@ -4,4 +4,4 @@
 
 This guide provides instructions for deploying {partner-product-short-name} on the AWS Cloud.
 
-This Quick Start is for registered AWS Marketplace sellers who are looking for a simple and lightweight serverless solution for completing the required integration on new software as a service (SaaS) listings.
+This Quick Start is for registered AWS Marketplace sellers who are looking for a lightweight serverless solution for completing the required integration on new software as a service (SaaS) listings.
