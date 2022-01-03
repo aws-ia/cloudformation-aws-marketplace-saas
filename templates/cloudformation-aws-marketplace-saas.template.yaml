@@ -1,26 +1,26 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: "AWS Market Place SaaS - entitlement and subscription portal (qs-1s3j136e1)"
+Description: "AWS Marketplace SaaS entitlement and subscription portal (qs-1s3j136e1)"
 Metadata:
   QuickStartDocumentation:
-    EntrypointName: "Deploy AWS Market Place SaaS entitlement and subscription portal"
+    EntrypointName: "Deploy AWS Marketplace SaaS entitlement and subscription portal"
   AWS::CloudFormation::Interface:
     ParameterLabels:
       AWSMarketplaceMeteringRecordsTableName:
-        default: "Metering Records DynamoDB Table Name"
+        default: "Metering records Amazon DynamoDB table name"
       CreateRegistrationWebPage:
-        default: "Create Registration Page"
+        default: "Registration page"
       EntitlementSNSTopic:
-        default: "Entitlements SNS Topic ARN"
+        default: "Entitlements SNS topic ARN"
       MarketplaceTechAdminEmail:
-        default: "Admin Email Address"
+        default: "Admin email address"
       NewSubscribersTableName:
-        default: "New Subscribers DynamoDB Table Name"
+        default: "New subscribers DynamoDB table name"
       ProductCode:
-        default: "Product Code"
+        default: "Product code"
       SubscriptionSNSTopic:
-        default: "Subscriptions SNS Topic ARN"
+        default: "Subscriptions SNS topic ARN"
       TypeOfSaaSListing:
-        default: "SaaS Pricing Model"
+        default: "SaaS pricing model"
       WebsiteS3BucketName:
         default: ""
       # AWS IA configuration
@@ -28,7 +28,7 @@ Metadata:
         default: Artifact S3 bucket name
     ParameterGroups:
       - Label:
-          default: AWS Infrastructure and Automation configuration
+          default: AWS Integration and Automation configuration
         Parameters:
           - TypeOfSaaSListing
           - CreateRegistrationWebPage
@@ -39,37 +39,35 @@ Metadata:
           - NewSubscribersTableName
           - AWSMarketplaceMeteringRecordsTableName
           - MarketplaceTechAdminEmail
-      - Label:
-          default: AWS Infrastructure and Automation configuration
-        Parameters:
           - ArtifactBucketName
+             
 Parameters:
   AWSMarketplaceMeteringRecordsTableName:
     Default: AWSMarketplaceMeteringRecords
-    Description: "Use a custom value for this Metering Records Table. Value must be unique per product. Default value provided."
+    Description: "Custom value for the metering records table. Value must be unique per product."
     Type: String
   CreateRegistrationWebPage:
     AllowedValues:
       - "true"
       - "false"
     Default: "true"
-    Description: "A registration website page will be created and hosted via AWS CloudFront. If you have your own custom registration page select 'false'. Default value provided"
+    Description: "Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'."
     Type: String
   EntitlementSNSTopic:
-    Description: "If your product is a SaaS Contract use the entitelement SNS topic provided from AWS Marketplace at the time of limited listing publish."
+    Description: "If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published."
     Type: String
   MarketplaceTechAdminEmail:
     Type: String
-    Description: "Provided the email address that will receive SNS notifications for new customer registrations, entitlement changes, and subscription events."
+    Description: "The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events."
   NewSubscribersTableName:
     Default: AWSMarketplaceSubscribers
-    Description: "Use a custom value for the New Subscribers Table. Value must be unique per product. Default value provided."
+    Description: "The custom value for the New Subscribers table. Value must be unique per product."
     Type: String
   ProductCode:
-    Description: "Enter the product code provided from AWS Marketplace at the time of limited listing publish."
+    Description: "The product code provided by AWS Marketplace at the time the limited listing was published."
     Type: String
   SubscriptionSNSTopic:
-    Description: "If your product is a SaaS Subscription or Saas Contract with Subscription use the entitlement SNS topic provided from AWS Marketplace at the time of limited listing publish."
+    Description: "If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published."
     Type: String
   TypeOfSaaSListing:
     AllowedValues:
@@ -77,11 +75,11 @@ Parameters:
       - contracts
       - subscriptions
     Default: contracts_with_subscription
-    Description: "Select one of the allowed values for the SaaS pricing model of your product. Default value provided."
+    Description: "The SaaS pricing model of your product."
     Type: String
   WebsiteS3BucketName:
     Type: String
-    Description: "Provide the S3 bucket that will hold the static HTML registration page files. If this bucket does not exist it will be created"
+    Description: "The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created."
   # Integration and Automation location parameters
   ArtifactBucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
@@ -90,7 +88,7 @@ Parameters:
       (-).
     Default: aws-quickstart
     # TODO: nitpick the name and wording here
-    Description: S3 bucket name for where the arifacts are housed. This string can include
+    Description: Name of the S3 bucket name that contains that artifacts. This string can include
       numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start
       or end with a hyphen (-).
     Type: String
