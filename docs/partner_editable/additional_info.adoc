@@ -14,7 +14,7 @@ image::../images/cloudformation-aws-marketplace-saas-workflow-of-events.png[Work
 
 With SaaS subscriptions and contracts, customers subscribe to your products through AWS Marketplace, but they access the product on an environment that you manage in your AWS account. After subscribing to a product, customers are directed to a product registration page that you create and manage as a part of your SaaS product. 
 
-On your software’s registration page, you can collect whatever information is required to create an account for your customer. AWS Marketplace recommends collecting email addresses if you plan to contact customers through email for usage notifications.
+On your software’s registration page, you can collect whatever information is required to create an account for your customer. AWS Marketplace recommends collecting email addresses if you plan to send customers usage notifications.
 
 The registration page identifies and accepts the *x-amzn-marketplace-token* token from the AWS Marketplace form data. The token includes the customer’s identiﬁer for billing. The page then passes the token value to the AWS Marketplace Metering Service and AWS Marketplace Entitlement Service APIs to resolve for the unique customer identiﬁer and corresponding product code.
 
