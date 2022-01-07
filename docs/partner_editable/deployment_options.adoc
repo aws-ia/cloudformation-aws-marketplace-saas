@@ -1,10 +1,9 @@
 // Edit this placeholder text to accurately describe your architecture.
 
-This Quick Start provides three deployment options:
+This Quick Start provides the following deployment options:
 
-1. In the case of contracts_with_subscription all of the resources depicted on the architecture diagram are created. This includes deployment option provides the required service to manage both contract entitlements and metered usage.
-2. In the case of a contracts, only resources necessary to manage contract entitlements are deployed.
-3. In the case of a subscriptions, only resources necessary to manage subscription based metered usage are deployed.
+* A full deployment option that supports both contracts and subscriptions. This option provides all required services to manage both contract entitlements and metered usage.
+* A contracts-only deployment that provides only the resources required to manage contract entitlements.
+* A subscriptions-only deployment that provides only the resources required to manage subscription-based metered usage.
 
-
-The Quick Start provides a single source template that handles all three deployment configurations.
+The Quick Start provides a single template that includes all three deployment options.
