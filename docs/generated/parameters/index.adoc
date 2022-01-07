@@ -1,3 +1,3 @@
 
-=== Deploy AWS Market Place SaaS entitlement and subscription portal
+=== Deploy AWS Marketplace SaaS entitlement and subscription portal
 include::cloudformation-aws-marketplace-saas.template.adoc[]

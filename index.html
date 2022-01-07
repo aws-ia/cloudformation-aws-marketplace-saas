@@ -840,17 +840,27 @@ p.footer-text a{color:#d7d8d8}
 <ul class="sectlevel2">
 <li><a href="#_confirm_your_aws_account_configuration">Confirm your AWS account configuration</a></li>
 <li><a href="#_launch_the_quick_start">Launch the Quick Start</a></li>
+<li><a href="#_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</a></li>
 </ul>
 </li>
-<li><a href="#_post_deployment_steps">Post-deployment steps</a></li>
+<li><a href="#_how_it_works">How it works</a>
+<ul class="sectlevel2">
+<li><a href="#_register_new_customers">Register new customers</a></li>
+<li><a href="#_grant_access_to_new_subscribers">Grant access to new subscribers</a></li>
+<li><a href="#_update_entitlement_levels_to_new_and_existing_subscribers_saas_contracts_only">Update entitlement levels to new and existing subscribers (SaaS contracts only)</a></li>
+<li><a href="#_revoke_access_to_customers_with_expired_contracts_and_canceled_subscriptions">Revoke access to customers with expired contracts and canceled subscriptions</a></li>
+<li><a href="#_meter_for_usage">Meter for usage</a></li>
+</ul>
+</li>
+<li><a href="#_post_deployment_steps">Post-deployment steps</a>
+<ul class="sectlevel2">
+<li><a href="#_connect_your_cloudfront_distribution_to_api_gateway">Connect your Cloudfront distribution to API Gateway</a></li>
+<li><a href="#_confirm_the_amazon_sns_subscription">Confirm the Amazon SNS subscription</a></li>
+</ul>
+</li>
 <li><a href="#_faq">FAQ</a></li>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
 <li><a href="#_customer_responsibility">Customer responsibility</a></li>
-<li><a href="#_parameter_reference">Parameter reference</a>
-<ul class="sectlevel2">
-<li><a href="#_deploy_aws_market_place_saas_entitlement_and_subscription_portal">Deploy AWS Market Place SaaS entitlement and subscription portal</a></li>
-</ul>
-</li>
 <li><a href="#_send_us_feedback">Send us feedback</a></li>
 <li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
 <li><a href="#_github_repository">GitHub repository</a></li>
@@ -879,7 +889,7 @@ p.footer-text a{color:#d7d8d8}
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph text-center">
-<p><strong>September 2021</strong><br>
+<p><strong>December 2021</strong><br>
 <em>AWS Marketplace SaaS Integration team</em></p>
 </div></div></td>
 </tr>
@@ -916,10 +926,10 @@ report bugs, or submit feature ideas for this Quick Start.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>This guide provides instructions for deploying the Serverless SaaS Integration Solution on the AWS Cloud.</p>
+<p>This guide provides instructions for deploying AWS Marketplace Serverless SaaS Integration on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start is for registered AWS Marketplace sellers who are looking for a simple and lighweight serverless solution for completing the required integration on new SaaS listings.</p>
+<p>This Quick Start is for registered AWS Marketplace sellers who want a lightweight serverless solution for completing the required integration on new software as a service (SaaS) listings.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -939,91 +949,7 @@ report bugs, or submit feature ideas for this Quick Start.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The AWS Marketplace Serverless SaaS Integration solution fulfills the core capabilities required to successfully integrate a vendor SaaS solution with it’s corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.</p>
-</div>
-<div class="paragraph">
-<p><strong>Register new customers</strong></p>
-</div>
-<div class="paragraph">
-<p>With SaaS subscriptions and SaaS contracts, your customers subscribe to your products through AWS Marketplace, but access the product on environment you manage in your AWS account. After subscribing to the product, your customer is directed to a product registration page you create and manage as a part of your SaaS product. On your software’s registration page, you collect whatever information is required to create an account for the customer. AWS Marketplace recommends collecting your customer’s email addresses if you plan to contact them through email for usage notifications.
-The registration page needs to be able to identify and accept the x-amzn-marketplace-token token in the form data from AWS Marketplace with the customer’s identiﬁer for billing. It should then pass that token value to the AWS Marketplace Metering Service and AWS Marketplace Entitlement Service APIs to resolve for the unique customer identiﬁer and corresponding product code.</p>
-</div>
-<div class="paragraph">
-<p>This solution creates a static HTML registration page hosted on S3 which takes the users inputs defined in the html form and submits them to marketplace/customer endpoint. This page is delivered via a CloudFront Distribution, which can be configured to use domain/CNAME by your choice. The POST request coming from AWS Marketplace is intercepted by the Edge <code>src/lambda-edge/edge-redirect.js</code>, which transforms the POST request to GET request, and passes the x-amzn-marketplace-token in the query string. The handler for the marketplace/customer endpoint is defined in the <code>src/register-new-subscriber.js</code> file, where we call the resolveCustomer and validate the token. If the token is valid the customer record is created in the <code>AWSMarketplaceSubscribers</code> DynamoDB table and the new customer data are stored.</p>
-</div>
-<div class="paragraph">
-<p><strong>Grant access to new subscribers</strong></p>
-</div>
-<div class="paragraph">
-<p>Once the <code>resolveCustomer</code> endpoint returns a successful response, you as the SaaS provider will need to provide access to the solution to the new subscriber. Based on the type of listing, contract or subscriptions, we have defined different conditions in the grant-revoke-access-to-product.js stream handler that is executed on adding new or updating existing rows.
-In this implementation the Marketplace Tech Admin email address (defined as deployment parameter), will receive email notification when new services needs to be provisioned or existing services needs to be updated for a customer. AWS Marketplace strongly recommends automating the access and environment management which can be achieved by modifying the grant-revoke-access-to-product.js function. The property <strong>successfully subscribed</strong> is set when a successful response is returned by the SQS entitlement handler for SaaS Contract based listings or for Subscriptions baed listings, after receiving <strong>subscribe-success</strong> message from the Subscription SNS Topic in the subscription-sqs-handler.js.</p>
-</div>
-<div class="paragraph">
-<p><strong>Updating entitlement levels to new and existing subscribers (SaaS Contracts only)</strong></p>
-</div>
-<div class="paragraph">
-<p>If a customer’s entitlement changes, a message is received on the Entitlements SNS topic. On each new messag, the lambda function entitlement-sqs.js calls the marketplace EntitlementService and stores the response in the <code>AWSMarketplaceSubscribers</code> DynamoDB table. When the entitlement is update notification is sent to the MarketplaceTechAdmin email address.</p>
-</div>
-<div class="paragraph">
-<p><strong>Revoking access to customers with expired contracts and cancelled subscriptions</strong></p>
-</div>
-<div class="paragraph">
-<p>The revoke access logic is implemented in a similar manner as the grant access logic. The MarketplaceTechAdmin address receives an email when the contract expires or the subscription is cancelled. AWS Marketplace strongly recommends automating the access and environment management which can be achieved by modifying the grant-revoke-access-to-product.js function.</p>
-</div>
-<div class="paragraph">
-<p><strong>Metering for usage</strong></p>
-</div>
-<div class="paragraph">
-<p>For SaaS subscriptions listings, the SaaS vendor must meter for all usage and report the metering record to AWS Marketplace, which then bills customers based on the records provided. For SaaS contracts, the vendor only meter for usage beyond a customer’s contract entitlements. The SaaS provider must send AWS a quantity of usage accrued for each customer on the dimensions defined when you created your product, such as gigabytes transferred or hosts scanned in a given hour.</p>
-</div>
-<div class="paragraph">
-<p>The MeteringSchedule CloudWatch Event rule is triggered every hour. The metering-hourly-job.js then queries all of the pending/unreported metering records from the <code>AWSMarketplaceMeteringRecords</code> table using the PendingMeteringRecordsIndex. All of the pending records are aggregated based on the customerIdentifier and dimension name, and sent to the SQSMetering queue. The records in the <code>AWSMarketplaceMeteringRecords</code> table are expected to be inserted programmatically by your SaaS application. In this case you will have to give permissions to the service in charge of collecting usage data in your existing SaaS product to be able to write to the <code>AWSMarketplaceMeteringRecords</code> table.
-The lambda function metering-sqs.js sends all of the queued metering records to the AWS marketplace Metering API. After every call to the batchMeterUsage endpoint, the rows in the <code>AWSMarketplaceMeteringRecords</code> table are updated with the response returned from the Metering Service, which can be found in the metering_response field. If the request was unsuccessful the metering_failed value with be set to true and you will have to investigate the issue the error will be also stored in the metering_response field.</p>
-</div>
-<div class="paragraph">
-<p>The lambda function metering-sqs.js sends all of the queued metering records to the AWS marketplace Metering API. After every call to the batchMeterUsage endpoint, the rows in the <code>AWSMarketplaceMeteringRecords</code> table are updated with the response returned from the Metering Service, which can be found in the metering_response field. If the request was unsuccessful the metering_failed value with be set to true and you will have to investigate the issue the error will be also stored in the metering_response field.</p>
-</div>
-<div class="paragraph">
-<p>The new records in the <code>AWSMarketplaceMeteringRecords</code> table should be stored in the following format:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "create_timestamp": 113123,
-  "customerIdentifier": "ifAPi5AcF3",
-  "dimension_usage": [
-    {
-      "dimension": "users",
-      "value": 3
-    },
-     {
-      "dimension": "admin_users",
-      "value": 1
-    }
-  ],
-  "metering_pending": "true"
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Where the create_timestamp is the sort key and customerIdentifier is the partition key, both forming the Primary key.
-After the record is submitted to AWS Marketplace API, it will be updated and entry will look like this.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-   "create_timestamp": 113123,
-   "customerIdentifier": "ifAPi5AcF3",
-   "dimension_usage": [
-     {
-       "dimension": "admin_users",
-       "value": 3
-     }
-   ],
-   "metering_failed": false,
-   "metering_response": "{\"Results\":[{\"UsageRecord\":{\"Timestamp\":\"2020-06-24T04:04:53.776Z\",\"CustomerIdentifier\":\"ifAPi5AcF3\",\"Dimension\":\"admin_users\",\"Quantity\":3},\"MeteringRecordId\":\"35155d37-56cb-423f-8554-5c4f3e3ff56d\",\"Status\":\"Success\"}],\"UnprocessedRecords\":[]}"
- }</pre>
-</div>
+<p>The AWS Marketplace Serverless SaaS Integration deployment fulfills the core capabilities required to successfully integrate a vendor&#8217;s SaaS solution with its corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1095,25 +1021,40 @@ AWS Cloud.</p>
 </div>
 <div id="architecture1" class="imageblock">
 <div class="content">
-<img src="images/architecture_diagram.png" alt="Architecture">
+<img src="images/cloudformation-aws-marketplace-saas-architecture-diagram.png" alt="Architecture">
 </div>
 <div class="title">Figure 1. Quick Start architecture for AWS Marketplace Serverless SaaS Integration on AWS</div>
 </div>
 <div class="paragraph">
-<p>As shown in <a href="#architecture1">Figure 1</a>, the Quick Start sets up the following:</p>
+<p>As shown in <a href="#architecture1">Figure 1</a>, the Quick Start sets up the following environment:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>A CloudFront Distribution of the HTML based customer registration page.*</p>
+<p>AWS Marketplace for managing customer subscriptions and passing tokens with customer billing identifiers and product codes to AWS Marketplace Metering Service and Entitlement Service APIs.</p>
 </li>
 <li>
-<p>An Amazon API Gateway connecting registration page to the new subscriber services.*</p>
+<p>CloudFront Lambda@Edge for intercepting, transforming, and passing customer tokens.</p>
 </li>
 <li>
-<p>DynamoDB Tables to store the GetEntitlements responses and metering records.*</p>
+<p>Amazon CloudFront for providing the configurable registration page URL for the SaaS product integration.</p>
+</li>
+<li>
+<p>Amazon S3 for storing the static HTML pages that accept and submit registration input to the AWS Marketplace customer endpoints.</p>
+</li>
+<li>
+<p>Amazon API Gateway for receiving tokens from form data on the registration page and generating the new endpoint base URL after the AWS CloudFormation stack is deployed.</p>
+</li>
+<li>
+<p>AWS Lambda for handling customer endpoints and validating AWS Marketplace customer tokens.</p>
+</li>
+<li>
+<p>Amazon DynamoDB for storing valid customer records in a DynamoDB table.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>For workflow details, see <a href="#_how_it_works">How it works</a>.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1141,10 +1082,10 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>This deployment guide requires a moderate level of familiarity with AWS services. If you’re new to AWS, visit the Getting Started Resource Center Getting Started Resource Center (<a href="https://aws.amazon.com/getting-started/" class="bare">https://aws.amazon.com/getting-started/</a>).</p>
+<p>This deployment guide requires a moderate level of familiarity with AWS services. If you’re new to AWS, refer to the <a href="https://aws.amazon.com/getting-started/" target="_blank" rel="noopener">Getting Started Resource Center</a>.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start also assumes familiarity with AWS Marketplace and the SaaS product listing process. An existing SaaS listing and the associated product code is required to complete the deployment. To familiarize yourself with the SaaS listing processes, please visit the Software as a service (SaaS)–based products (<a href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html" class="bare">https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html</a>) portion of the AWS Marketplace Seller Guide <a href="https://docs.aws.amazon.com/marketplace/latest/userguide/what-is-marketplace.html" target="_blank" rel="noopener">AWS Marketplace Seller Guide</a>.</p>
+<p>This Quick Start also assumes familiarity with AWS Marketplace and the SaaS product listing process. An existing SaaS listing and the associated product code is required to complete the deployment. To learn more about SaaS listing processes, refer to <a href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html" target="_blank" rel="noopener">Software as a service (SaaS)–based products</a> in the AWS Marketplace Seller Guide.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1214,21 +1155,12 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_supported_regions">Supported Regions</h4>
+<h4 id="_supported_aws_regions">Supported AWS Regions</h4>
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/regions.adoc</code></strong></em></p>
+<p>For any Quick Start to work in a Region other than its default Region, all the services it deploys must be supported in that Region. You can launch a Quick Start in any Region and see if it works. If you get an error such as “Unrecognized resource type,” the Quick Start is not supported in that Region.</p>
 </div>
-<div id="preview_mode">
 <div class="paragraph">
-<p>This Quick Start supports the following Regions:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>us-east-1, US East (N. Virginia)</p>
-</li>
-</ul>
-</div>
+<p>For an up-to-date list of AWS Regions and the AWS services they support, see <a href="https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/" target="_blank" rel="noopener">AWS Regional Services</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1248,6 +1180,40 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="paragraph">
 <p>Before launching the Quick Start, you must sign in to the AWS Management Console with IAM permissions for the resources that the templates deploy. The <em>AdministratorAccess</em> managed policy within IAM provides sufficient permissions, although your organization may choose to use a custom policy with more restrictions. For more information, see <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html" target="_blank" rel="noopener">AWS managed policies for job functions</a>.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_deployment_options">Deployment options</h4>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deployment_options.adoc</code></strong></em></p>
+</div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This Quick Start provides the following deployment options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A full deployment option that supports both contracts and subscriptions. This option provides all required services to manage both contract entitlements and metered usage.</p>
+</li>
+<li>
+<p>A contracts-only deployment that provides only the resources required to manage contract entitlements.</p>
+</li>
+<li>
+<p>A subscriptions-only deployment that provides only the resources required to manage subscription-based metered usage.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Quick Start provides a single template that includes all three deployment options.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/pre-reqs.adoc</code></strong></em></p>
 </div>
@@ -1266,45 +1232,11 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="sect3">
 <h4 id="_prepare_for_the_deployment">Prepare for the deployment</h4>
 <div class="paragraph">
-<p>Ensure that you have the <strong>Product Code</strong> for your SaaS listing. This code is assigned to your SaaS listing on initial creation. It can be found in your <a href="https://aws.amazon.com/marketplace/management/products/saas" target="_blank" rel="noopener">SaaS product catalog</a> within the <a href="https://aws.amazon.com/marketplace/management/homepage?pageType=awsmpmp%3Acustomer" class="bare">https://aws.amazon.com/marketplace/management/homepage?pageType=awsmpmp%3Acustomer</a> [AWS Marketplace Management Portal^].</p>
+<p>Ensure that you have the product code for your SaaS listing. This code is assigned to your SaaS listing when you create it. You can find the product code in your <a href="https://aws.amazon.com/marketplace/management/products/saas" target="_blank" rel="noopener">SaaS product catalog</a> within the <a href="https://aws.amazon.com/marketplace/management/homepage?pageType=awsmpmp%3Acustomer" target="_blank" rel="noopener">AWS Marketplace Management Portal</a>.</p>
 </div>
 <div class="paragraph">
-<p>Ensure that you have the relevant SNS topic ARN(s) for your pricing model. For contract pricing, you’ll need the Entitlements SNS Topic. For subscription pricing, you’ll need the Subscription SNS Topic. For contract plus subscriptions pricing, you’ll need both the Entitlements and Subscription SNS Topic ARNs.</p>
+<p>Ensure that you have the relevant SNS topic Amazon Resource Name (ARNs) for your pricing model. For contract pricing, you must have the entitlements SNS topic. For subscription pricing, you must have the subscription SNS topic. For both contract and subscriptions pricing, you must have both the entitlements and subscription SNS topic ARNs.</p>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_deployment_options">Deployment options</h4>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deployment_options.adoc</code></strong></em></p>
-</div>
-<table class="tableblock frame-all grid-all stretch preview_mode">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>This Quick Start provides three deployment options:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>In the case of contracts_with_subscription all of the resources depicted on the architecture diagram are created. This includes deployment option provides the required service to manage both contract entitlements and metered usage.</p>
-</li>
-<li>
-<p>In the case of a contracts, only resources necessary to manage contract entitlements are deployed.</p>
-</li>
-<li>
-<p>In the case of a subscriptions, only resources necessary to manage subscription based metered usage are deployed.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The Quick Start provides a single source template that handles all three deployment configurations.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1353,16 +1285,16 @@ Ensure that your are signed into you seller account. This is the AWS account tha
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Sign in to your AWS account, and click on the "Deploy" link below to launch the AWS CloudFormation template. For help understanding what is being deployed, see <a href="#_deployment_options">Deployment options</a> earlier in this guide.</p>
+<p>Sign in to your AWS account, and launch the following AWS CloudFormation template. For help understanding the details of the deployment, see <a href="#_deployment_options">Deployment options</a> earlier in this guide.</p>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 75%;">
-<col style="width: 25%;">
+<col style="width: 66.6666%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_launch_permalink" target="_blank" rel="noopener">Deploy AWS Marketplace Serverless SaaS Integration into a new VPC on AWS</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_template_permalink" target="_blank" rel="noopener">View template</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://fwd.aws/XxP88?" target="_blank" rel="noopener">Deploy AWS Marketplace Serverless SaaS Integration into a new VPC on AWS</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://fwd.aws/bDGXB?" target="_blank" rel="noopener">View template</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1374,17 +1306,105 @@ Ensure that your are signed into you seller account. This is the AWS account tha
 <p>On the <strong>Create stack</strong> page, keep the default setting for the template URL, and then choose <strong>Next</strong>.</p>
 </li>
 <li>
-<p>On the <strong>Specify stack details</strong> page, change the stack name if needed. Review the parameters for the template. Provide values for the parameters that require input. For all other parameters, review the default settings and customize them as necessary. For details on each parameter, see the <a href="#_parameter_reference">Parameter reference</a> section of this guide. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
+<p>On the <strong>Specify stack details</strong> page, change the stack name if needed. Review the parameters for the template. Provide values for the parameters that require input. For all other parameters, review the default settings and customize them as necessary. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="paragraph">
-<p>+</p>
+<p>+
+In the following tables, parameters are listed by category and described separately for the deployment options. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
 </div>
 <div class="paragraph">
 <p>+
-. On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you’re finished, choose <strong>Next</strong>.
+NOTE: Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. AWS Integration and Automation configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SaaS pricing model
+(<code>TypeOfSaaSListing</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>contracts_with_subscription</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SaaS pricing model of your product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration page
+(<code>CreateRegistrationWebPage</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>NO_LABEL</strong>
+(<code>WebsiteS3BucketName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>*<em>Requires input</em></strong>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The S3 bucket that holds the static HTML registration page files. If this bucket doesn&#8217;t exist, it is created.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product code
+(<code>ProductCode</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>*<em>Requires input</em></strong>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The product code provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subscriptions SNS topic ARN
+(<code>SubscriptionSNSTopic</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>*<em>Requires input</em></strong>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entitlements SNS topic ARN
+(<code>EntitlementSNSTopic</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>*<em>Requires input</em></strong>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">New subscribers DynamoDB table name
+(<code>NewSubscribersTableName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceSubscribers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The custom value for the New Subscribers table. Value must be unique per product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metering records Amazon DynamoDB table name
+(<code>AWSMarketplaceMeteringRecordsTableName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceMeteringRecords</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom value for the metering records table. Value must be unique per product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Admin email address
+(<code>MarketplaceTechAdminEmail</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>*<em>Requires input</em></strong>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Artifact S3 bucket name
+(<code>ArtifactBucketName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws-quickstart</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the S3 bucket name that contains that artifacts. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>+
+. On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you finish, choose <strong>Next</strong>.
 . On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select the two check boxes to acknowledge that the template creates IAM resources and might require the ability to automatically expand macros.
 . Choose <strong>Create stack</strong> to deploy the stack.
 . Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the AWS Marketplace Serverless SaaS Integration deployment is ready.
@@ -1398,13 +1418,118 @@ Ensure that your are signed into you seller account. This is the AWS account tha
 </div>
 </div>
 <div class="sect1">
-<h2 id="_post_deployment_steps">Post-deployment steps</h2>
+<h2 id="_how_it_works">How it works</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Connecting your Cloudfront Distribution to API Gateway</strong></p>
+<p>As shown in <a href="#architecture2">Figure 2</a>,the AWS Marketplace Serverless SaaS Integration on AWS environment sets up the following workflow of events.</p>
+</div>
+<div id="architecture2" class="imageblock">
+<div class="content">
+<img src="images/cloudformation-aws-marketplace-saas-workflow-of-events.png" alt="Workflow">
+</div>
+<div class="title">Figure 2. Workflow of AWS Marketplace Serverless SaaS Integration on AWS environment</div>
+</div>
+<div class="sect2">
+<h3 id="_register_new_customers">Register new customers</h3>
+<div class="paragraph">
+<p>With SaaS subscriptions and contracts, customers subscribe to your products through AWS Marketplace, but they access the product on an environment that you manage in your AWS account. After subscribing to a product, customers are directed to a product registration page that you create and manage as a part of your SaaS product.</p>
 </div>
 <div class="paragraph">
-<p>To connect the Cloudfront Distribution of the registration page, you’ll need to update the baseUrl in web/script.js with the API Gateway endpoint URL.</p>
+<p>On your software’s registration page, you can collect whatever information is required to create an account for your customer. AWS Marketplace recommends collecting email addresses if you plan to send customers usage notifications.</p>
+</div>
+<div class="paragraph">
+<p>The registration page identifies and accepts the <strong>x-amzn-marketplace-token</strong> token from the AWS Marketplace form data. The token includes the customer’s identiﬁer for billing. The page then passes the token value to the AWS Marketplace Metering Service and AWS Marketplace Entitlement Service APIs to resolve for the unique customer identiﬁer and corresponding product code.</p>
+</div>
+<div class="paragraph">
+<p>The Quick Start creates a static HTML registration page hosted on Amazon S3. The page takes user inputs that are defined in the HTML form and submits them to the customer endpoint on AWS Marketplace. The page is delivered via a CloudFront distribution, which can be configured to use domain/CNAME. The POST request coming from AWS Marketplace is intercepted by the Lambda@Edge <strong>src/lambda-edge/edge-redirect.js</strong> function, which transforms the POST request to a GET request and passes the <strong>x-amzn-marketplace-token</strong> in the query string. The handler for the customer endpoint on AWS Marketplace is defined in the <strong>src/register-new-subscriber.js</strong> function, which calls the <strong>resolveCustomer</strong> endpoint and validates the token. If the token is valid, the customer record is created in the <strong>AWSMarketplaceSubscribers</strong> DynamoDB table, and the new customer data is stored.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_grant_access_to_new_subscribers">Grant access to new subscribers</h3>
+<div class="paragraph">
+<p>After the <strong>resolveCustomer</strong> endpoint returns a successful response, you (the SaaS provider) must provide the new subscriber access to the solution. Based on the type of listing (contract or subscriptions), different conditions are defined in the <strong>grant-revoke-access-to-product.js</strong> stream handler that&#8217;s initiated when adding new or updating existing rows.</p>
+</div>
+<div class="paragraph">
+<p>In the Quick Start deployment, the AWS Marketplace Tech Admin email address (which is defined as the <strong>MarketplaceTechAdmin</strong> deployment parameter) receives email notifications when new services must be provisioned or existing services must be updated for a customer. AWS Marketplace strongly recommends automating the access and environment management by modifying the <strong>grant-revoke-access-to-product.js</strong> function. The property <strong>successfully subscribed</strong> is set when a successful response is returned by the Amazon Simple Queue Service (Amazon SQS) entitlement handler for SaaS contract-based listings or for subscriptions-based listings after receiving the <strong>subscribe-success</strong> message from the subscription Amazon Simple Notification Service (Amazon SNS) topic in the <strong>subscription-sqs-handler.js</strong> function.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_entitlement_levels_to_new_and_existing_subscribers_saas_contracts_only">Update entitlement levels to new and existing subscribers (SaaS contracts only)</h3>
+<div class="paragraph">
+<p>If a customer’s entitlement changes, a message is received on the Amazon SNS topic for the entitlement. On each new message, the <strong>entitlement-sqs.js</strong> Lambda function calls the AWS Marketplace <strong>EntitlementService</strong> endpoint and stores the response in the <strong>AWSMarketplaceSubscribers</strong> DynamoDB table. When the entitlement is updated, a notification is sent to the AWS Marketplace Tech Admin email address.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_revoke_access_to_customers_with_expired_contracts_and_canceled_subscriptions">Revoke access to customers with expired contracts and canceled subscriptions</h3>
+<div class="paragraph">
+<p>The revoke-access logic is implemented in a similar way as the grant-access logic. The AWS Marketplace Tech Admin address receives an email when the contract expires or the subscription is canceled. AWS Marketplace strongly recommends automating the access and environment management by modifying the <strong>grant-revoke-access-to-product.js</strong> function.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_meter_for_usage">Meter for usage</h3>
+<div class="paragraph">
+<p>For SaaS subscriptions listings, the SaaS vendor must meter for all usage and report the metering record to AWS Marketplace, which then bills customers based on the records provided. For SaaS contracts, the vendor only meters for usage beyond a customer’s contract entitlements. The SaaS provider must send AWS a quantity of usage accrued for each customer on the dimensions defined when you created your product, such as gigabytes transferred or hosts scanned in a given hour.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>MeteringSchedule</strong> CloudWatch event rule is triggered every hour. At that time, the <strong>metering-hourly-job.js</strong> function queries all of the pending and unreported metering records from the <strong>AWSMarketplaceMeteringRecords</strong> table using the <strong>PendingMeteringRecordsIndex</strong> index. All pending records are aggregated based on the <strong>customerIdentifier</strong> property and dimension name and sent to the <strong>SQSMetering</strong> queue. The records in the <strong>AWSMarketplaceMeteringRecords</strong> table should be inserted programmatically by your SaaS application. To allow write access to the <strong>AWSMarketplaceMeteringRecords</strong> table, you must give permissions to the service in charge of collecting usage data in your existing SaaS product.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>metering-sqs.js</strong> Lambda function sends all queued metering records to the AWS Marketplace Metering Service API. After each call to the <strong>batchMeterUsage</strong> endpoint, the rows in the <strong>AWSMarketplaceMeteringRecords</strong> table are updated with the response returned from the Metering Service. Responses are stored in the <strong>metering_response</strong> field. If the request is unsuccessful, the <strong>metering_failed</strong> value is set to true, and you must investigate the error defined in the <strong>metering_response</strong> field.</p>
+</div>
+<div class="paragraph">
+<p>New records in the <strong>AWSMarketplaceMeteringRecords</strong> table should be stored in the following format:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "create_timestamp": 113123,
+  "customerIdentifier": "ifAPi5AcF3",
+  "dimension_usage": [
+    {
+      "dimension": "users",
+      "value": 3
+    },
+     {
+      "dimension": "admin_users",
+      "value": 1
+    }
+  ],
+  "metering_pending": "true"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>create_timestamp</strong> attribute is the sort key, and the <strong>customerIdentifier</strong> attribute is the partition key. The sort and partition keys are combined to form the primary key.</p>
+</div>
+<div class="paragraph">
+<p>After the record is submitted to the AWS Marketplace API, the record updates, and the entry looks similar to the following:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+   "create_timestamp": 113123,
+   "customerIdentifier": "ifAPi5AcF3",
+   "dimension_usage": [
+     {
+       "dimension": "admin_users",
+       "value": 3
+     }
+   ],
+   "metering_failed": false,
+   "metering_response": "{\"Results\":[{\"UsageRecord\":{\"Timestamp\":\"2020-06-24T04:04:53.776Z\",\"CustomerIdentifier\":\"ifAPi5AcF3\",\"Dimension\":\"admin_users\",\"Quantity\":3},\"MeteringRecordId\":\"35155d37-56cb-423f-8554-5c4f3e3ff56d\",\"Status\":\"Success\"}],\"UnprocessedRecords\":[]}"
+ }</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_post_deployment_steps">Post-deployment steps</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_connect_your_cloudfront_distribution_to_api_gateway">Connect your Cloudfront distribution to API Gateway</h3>
+<div class="paragraph">
+<p>To connect the Cloudfront Distribution of the registration page, do the following steps to update the <strong>baseUrl</strong> property in web/script.js file with the API Gateway endpoint URL.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1412,29 +1537,34 @@ Ensure that your are signed into you seller account. This is the AWS account tha
 <p>Retrieve the ID of the API you just deployed from <a href="https://console.aws.amazon.com/apigateway/main/apis?region=us-east-1" target="_blank" rel="noopener">API Gateway</a>.</p>
 </li>
 <li>
-<p>Update the baseUrl in the /web/scripts.js with the the API ID you just retrieved. This file is located within the s3://&lt;WEBSITE_BUCKET_NAME&gt;/ bucket, where WEBSITE_BUCKET_NAME is a deployment parameter you define. Please reference the before and after example below. Save the change.<br>
-<strong>Before</strong>: <code>const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';</code><br>
-<strong>After</strong>: <code>const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';</code></p>
+<p>Update the <strong>baseUrl</strong> property in the <strong>/web/scripts.js</strong> file with the the API ID you just retrieved. This file is located within the <strong>s3://&lt;WEBSITE_BUCKET_NAME&gt;/</strong> bucket, where <strong>WEBSITE_BUCKET_NAME</strong> is a deployment parameter that you define. See the following example. Save your changes.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Before</strong>: <code>const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';</code></p>
+</li>
+<li>
+<p><strong>After</strong>: <code>const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';</code></p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p>If using an IDE, you can update S3 with 'aws s3 cp ./web/ s3://&lt;WEBSITE_BUCKET_NAME&gt;/ --recursive'</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><strong>Confirm SNS Subscription</strong></p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>To receive email notifications on the MarketplaceTechAdmin email address for subscription events, you’ll need to confirm the subscription to the newly deployed SNS topic. The easiest way to do this is to click on the confirmation link that should have been sent to the MarketplaceTechAdmin email address during deployment.</p>
-</li>
-</ol>
+<div class="sect2">
+<h3 id="_confirm_the_amazon_sns_subscription">Confirm the Amazon SNS subscription</h3>
+<div class="paragraph">
+<p>To receive email notifications on the AWS Marketplace Tech Admin email address for subscription events, confirm the subscription to the newly deployed Amazon SNS topic by choosing the confirmation link sent during deployment.</p>
 </div>
 <div class="paragraph">
 <p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/faq_troubleshooting.adoc</code></strong></em></p>
 </div>
 <div class="preview_mode">
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1472,18 +1602,11 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 <div class="sect1">
 <h2 id="_troubleshooting">Troubleshooting</h2>
 <div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Ensure that you are deploying in a supported region (see <a href="#_supported_regions">Supported Regions</a>)</p>
-</li>
-<li>
-<p>Ensure that you are deploying into your registered seller account.</p>
-</li>
-<li>
-<p>Ensure that the names assigned for WebsiteS3BucketName, NewSubscribersTableName, and AWSMarketplaceMeteringRecordsTableName don&#8217;t already exist within S3 and DynamoDB.</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>Check the following:
+* Ensure that you deploy in a supported Region (see <a href="#_supported_regions">Supported Regions</a>)
+* Confirm that you are deploying into your registered seller account.
+* Ensure that the names assigned for <strong>WebsiteS3BucketName</strong>, <strong>NewSubscribersTableName</strong>, and <strong>AWSMarketplaceMeteringRecordsTableName</strong> parameters don&#8217;t already exist within S3 and DynamoDB.</p>
 </div>
 </div>
 </div>
@@ -1493,49 +1616,6 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 <div class="sectionbody">
 <div class="paragraph">
 <p>After you successfully deploy this Quick Start, confirm that your resources and services are updated and configured — including any required patches — to meet your security and other needs. For more information, see the <a href="https://aws.amazon.com/compliance/shared-responsibility-model/" target="_blank" rel="noopener">AWS Shared Responsibility Model</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_parameter_reference">Parameter reference</h2>
-<div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters labeled <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these parameter settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_deploy_aws_market_place_saas_entitlement_and_subscription_portal">Deploy AWS Market Place SaaS entitlement and subscription portal</h3>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. AWS Infrastructure and Automation configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artifact S3 bucket name
-(<code>ArtifactBucketName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws-quickstart</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">S3 bucket name for where the arifacts are housed. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
@@ -1551,7 +1631,7 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <h2 id="_quick_start_reference_deployments">Quick Start reference deployments</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>See the <a href="https://aws.amazon.com/quickstart/">AWS Quick Start home page</a>.</p>
+<p>See the <a href="https://aws.amazon.com/quickstart/" target="_blank" rel="noopener">AWS Quick Start home page</a>.</p>
 </div>
 </div>
 </div>
@@ -1587,9 +1667,9 @@ and to share your customizations with others.</p>
 </html>
 <!--
 repo commit:
-523f8251d816f2b158bb9f23a45b472f38567c23
+989b4705d30c06fc47e7ae52cd9af287bc6fb8d4
 
 submodule config:
- 81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (remotes/origin/swingline-test-4-g81ea0b6)
- 4c943a04792111b4d8f527d9e34b8002f25a30b0 submodules/sam (4c943a0)
+ cd43052c7c9fd4da2ec184add84f530a9242b7ef docs/boilerplate (remotes/origin/cdk-23-gcd43052)
+ d64bc79d9d36c3b5b685519854800f723415543d submodules/sam (d64bc79)
 -->

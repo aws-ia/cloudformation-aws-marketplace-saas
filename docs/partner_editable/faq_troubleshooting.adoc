@@ -17,6 +17,7 @@ For more information, see https://docs.aws.amazon.com/AWSCloudFormation/latest/U
 
 == Troubleshooting
 
-1. Ensure that you are deploying in a supported region (see link:#_supported_regions[Supported Regions])
-2. Ensure that you are deploying into your registered seller account.
-3. Ensure that the names assigned for WebsiteS3BucketName, NewSubscribersTableName, and AWSMarketplaceMeteringRecordsTableName don't already exist within S3 and DynamoDB.
+Check the following:
+* Ensure that you deploy in a supported Region (see link:#_supported_regions[Supported Regions])
+* Confirm that you are deploying into your registered seller account.
+* Ensure that the names assigned for *WebsiteS3BucketName*, *NewSubscribersTableName*, and *AWSMarketplaceMeteringRecordsTableName* parameters don't already exist within S3 and DynamoDB.
