@@ -5,8 +5,8 @@
 :partner-product-short-name: AWS Marketplace Serverless SaaS Integration
 // If there's no partner, comment partner-company-name.
 //:partner-company-name: Example Company Name, Ltd.
-:doc-month: December
-:doc-year: 2021
+:doc-month: January
+:doc-year: 2022
 // Uncomment the following "contributor" attributes as appropriate. If the partner agrees to include names, enter contributor names for every line we use. If partner doesn't want to include names, delete all placeholder names and keep only "{partner-company-name}" and "AWS Quick Start team." 
 //:partner-contributors: Shuai Ye, Michael McConnell, and John Smith, {partner-company-name}
 //:other-contributors: Akua Mansa, Trek10
