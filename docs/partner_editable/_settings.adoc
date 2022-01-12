@@ -1,5 +1,5 @@
 // Change the following attributes.
-:quickstart-project-name: quickstart-documentation-base
+:quickstart-project-name: cloudformation-aws-marketplace-saas
 :partner-product-name: AWS Marketplace Serverless SaaS Integration
 // For the following attribute, if you have no short name, enter the same name as partner-product-name.
 :partner-product-short-name: AWS Marketplace Serverless SaaS Integration
