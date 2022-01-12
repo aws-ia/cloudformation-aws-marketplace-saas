@@ -5,12 +5,12 @@
 |Parameter label (name) |Default value|Description|SaaS pricing model
 (`TypeOfSaaSListing`)|`contracts_with_subscription`|The SaaS pricing model of your product.|Registration page
 (`CreateRegistrationWebPage`)|`true`|Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.|**NO_LABEL**
-(`WebsiteS3BucketName`)|`\**__Requires input__**`|The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created.|Product code
-(`ProductCode`)|`\**__Requires input__**`|The product code provided by AWS Marketplace at the time the limited listing was published.|Subscriptions SNS topic ARN
-(`SubscriptionSNSTopic`)|`\**__Requires input__**`|If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.|Entitlements SNS topic ARN
-(`EntitlementSNSTopic`)|`\**__Requires input__**`|If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published.|New subscribers DynamoDB table name
+(`WebsiteS3BucketName`)|`**__Requires input__**`|The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created.|Product code
+(`ProductCode`)|`**__Requires input__**`|The product code provided by AWS Marketplace at the time the limited listing was published.|Subscriptions SNS topic ARN
+(`SubscriptionSNSTopic`)|`**__Requires input__**`|If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.|Entitlements SNS topic ARN
+(`EntitlementSNSTopic`)|`**__Requires input__**`|If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published.|New subscribers DynamoDB table name
 (`NewSubscribersTableName`)|`AWSMarketplaceSubscribers`|The custom value for the New Subscribers table. Value must be unique per product.|Metering records Amazon DynamoDB table name
 (`AWSMarketplaceMeteringRecordsTableName`)|`AWSMarketplaceMeteringRecords`|Custom value for the metering records table. Value must be unique per product.|Admin email address
-(`MarketplaceTechAdminEmail`)|`\**__Requires input__**`|The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events.|Artifact S3 bucket name
+(`MarketplaceTechAdminEmail`)|`**__Requires input__**`|The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events.|Artifact S3 bucket name
 (`ArtifactBucketName`)|`aws-quickstart`|Name of the S3 bucket name that contains that artifacts. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).
 |===
