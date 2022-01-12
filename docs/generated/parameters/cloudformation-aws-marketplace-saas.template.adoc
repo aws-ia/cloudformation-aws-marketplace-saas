@@ -4,7 +4,7 @@
 |===
 |Parameter label (name) |Default value|Description|SaaS pricing model
 (`TypeOfSaaSListing`)|`contracts_with_subscription`|The SaaS pricing model of your product.|Registration page
-(`CreateRegistrationWebPage`)|`true`|Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.|**NO_LABEL**
+(`CreateRegistrationWebPage`)|`true`|Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.|S3 bucket name
 (`WebsiteS3BucketName`)|`**__Requires input__**`|The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created.|Product code
 (`ProductCode`)|`**__Requires input__**`|The product code provided by AWS Marketplace at the time the limited listing was published.|Subscriptions SNS topic ARN
 (`SubscriptionSNSTopic`)|`**__Requires input__**`|If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.|Entitlements SNS topic ARN

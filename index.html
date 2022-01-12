@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.15">
+<meta name="generator" content="Asciidoctor 2.0.17">
 <title>AWS Marketplace Serverless SaaS Integration on the AWS Cloud</title>
 <style>
 
@@ -840,7 +840,6 @@ p.footer-text a{color:#d7d8d8}
 <ul class="sectlevel2">
 <li><a href="#_confirm_your_aws_account_configuration">Confirm your AWS account configuration</a></li>
 <li><a href="#_launch_the_quick_start">Launch the Quick Start</a></li>
-<li><a href="#_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</a></li>
 </ul>
 </li>
 <li><a href="#_how_it_works">How it works</a>
@@ -861,6 +860,11 @@ p.footer-text a{color:#d7d8d8}
 <li><a href="#_faq">FAQ</a></li>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
 <li><a href="#_customer_responsibility">Customer responsibility</a></li>
+<li><a href="#_parameter_reference">Parameter reference</a>
+<ul class="sectlevel2">
+<li><a href="#_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</a></li>
+</ul>
+</li>
 <li><a href="#_send_us_feedback">Send us feedback</a></li>
 <li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
 <li><a href="#_github_repository">GitHub repository</a></li>
@@ -878,11 +882,24 @@ p.footer-text a{color:#d7d8d8}
 <img src="https://aws-quickstart.s3.amazonaws.com/cloudformation-aws-marketplace-saas/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="QS" width="80" height="80">
 </div>
 </div>
-<div class="paragraph text-center">
-<p><strong>December 2021</strong><br>
-<em>AWS Marketplace SaaS Integration team</em></p>
+<h3 id="_draft_document_unofficial_guidance" class="discrete text-center">DRAFT DOCUMENT / UNOFFICIAL GUIDANCE</h3>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/__settings</em>.adoc</code></strong>_</p>
 </div>
-<div class="admonitionblock tip text-left">
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph text-center">
+<p><strong>January 2022</strong><br>
+<em>AWS Marketplace SaaS Integration team</em></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
@@ -904,19 +921,43 @@ report bugs, or submit feature ideas for this Quick Start.
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/overview_target_and_usage.adoc</code></strong></em></p>
+</div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This guide provides instructions for deploying AWS Marketplace Serverless SaaS Integration on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
 <p>This Quick Start is for registered AWS Marketplace sellers who want a lightweight serverless solution for completing the required integration on new software as a service (SaaS) listings.</p>
-</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_aws_marketplace_serverless_saas_integration_on_aws">AWS Marketplace Serverless SaaS Integration on AWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The AWS Marketplace Serverless SaaS Integration deployment fulfills the core capabilities required to successfully integrate a vendor&#8217;s SaaS solution with its corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.</p>
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/product_description.adoc</code></strong></em></p>
 </div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The AWS Marketplace Serverless SaaS Integration deployment fulfills the core capabilities required to successfully integrate a vendor&#8217;s SaaS solution with its corresponding listing on AWS Marketplace. These capabilities include accepting new customer registrations, granting and revoking customer access, updating customer entitlements, and reporting metered usage.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -950,14 +991,35 @@ After you deploy the Quick Start, create <a href="https://docs.aws.amazon.com/aw
 <h2 id="_software_licenses">Software licenses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>No licenses are required to deploy this Quick Start. All AWS service resources consumed during the launch of the Quick Start incur AWS service usage costs.</p>
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/licenses.adoc</code></strong></em></p>
 </div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No licenses are required to deploy this Quick Start. All AWS service resources consumed during the launch of the Quick Start incur AWS service usage costs.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_architecture">Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/architecture.adoc</code></strong></em></p>
+</div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Deploying this Quick Start builds the following AWS Marketplace Serverless SaaS Integration environment in the
 AWS Cloud.</p>
 </div>
@@ -997,7 +1059,10 @@ AWS Cloud.</p>
 </div>
 <div class="paragraph">
 <p>For workflow details, see <a href="#_how_it_works">How it works</a>.</p>
-</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -1012,11 +1077,23 @@ and <a href="https://aws.amazon.com/training/" target="_blank" rel="noopener">AW
 deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/specialized_knowledge.adoc</code></strong></em></p>
+</div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This deployment guide requires a moderate level of familiarity with AWS services. If you’re new to AWS, refer to the <a href="https://aws.amazon.com/getting-started/" target="_blank" rel="noopener">Getting Started Resource Center</a>.</p>
 </div>
 <div class="paragraph">
 <p>This Quick Start also assumes familiarity with AWS Marketplace and the SaaS product listing process. An existing SaaS listing and the associated product code is required to complete the deployment. To learn more about SaaS listing processes, refer to <a href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-products.html" target="_blank" rel="noopener">Software as a service (SaaS)–based products</a> in the AWS Marketplace Seller Guide.</p>
-</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_aws_account">AWS account</h3>
@@ -1037,6 +1114,10 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <div class="paragraph">
 <p>If necessary, request <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">service quota increases</a> for the following resources. You might need to request increases if your existing deployment currently uses these resources and if this Quick Start deployment could result in exceeding the default quotas. The <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">Service Quotas console</a> displays your usage and quotas for some aspects of some services. For more information, see <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html" target="_blank" rel="noopener">What is Service Quotas?</a> and <a href="https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html" target="_blank" rel="noopener">AWS service quotas</a>.</p>
 </div>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/service_limits.adoc</code></strong></em></p>
+</div>
+<div class="preview_mode">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1076,6 +1157,7 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 </tbody>
 </table>
 </div>
+</div>
 <div class="sect3">
 <h4 id="_supported_aws_regions">Supported AWS Regions</h4>
 <div class="paragraph">
@@ -1106,6 +1188,15 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="sect3">
 <h4 id="_deployment_options">Deployment options</h4>
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deployment_options.adoc</code></strong></em></p>
+</div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This Quick Start provides the following deployment options:</p>
 </div>
 <div class="ulist">
@@ -1123,7 +1214,24 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 </div>
 <div class="paragraph">
 <p>The Quick Start provides a single template that includes all three deployment options.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/pre-reqs.adoc</code></strong></em></p>
 </div>
+<table class="tableblock frame-all grid-all stretch preview_mode">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel3">
+<li><a href="#_prepare_for_the_deployment">Prepare for the deployment</a></li>
+</ul>
 </div>
 <div class="sect3">
 <h4 id="_prepare_for_the_deployment">Prepare for the deployment</h4>
@@ -1133,6 +1241,10 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="paragraph">
 <p>Ensure that you have the relevant SNS topic Amazon Resource Name (ARNs) for your pricing model. For contract pricing, you must have the entitlements SNS topic. For subscription pricing, you must have the subscription SNS topic. For both contract and subscriptions pricing, you must have both the entitlements and subscription SNS topic ARNs.</p>
 </div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -1140,6 +1252,10 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="sect1">
 <h2 id="_deployment_steps">Deployment steps</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deploy_steps.adoc</code></strong></em></p>
+</div>
+<div class="preview_mode">
 <div class="sect2">
 <h3 id="_confirm_your_aws_account_configuration">Confirm your AWS account configuration</h3>
 <div class="olist arabic">
@@ -1195,104 +1311,13 @@ Ensure that your are signed into you seller account. This is the AWS account tha
 </li>
 <li>
 <p>On the <strong>Specify stack details</strong> page, change the stack name if needed. Review the parameters for the template. Provide values for the parameters that require input. For all other parameters, review the default settings and customize them as necessary. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
-<div class="paragraph">
-<p>In the following tables, parameters are listed by category and described separately for the deployment options. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.
-</td>
-</tr>
-</table>
-</div>
 </li>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</h3>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. AWS Integration and Automation configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SaaS pricing model
-(<code>TypeOfSaaSListing</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>contracts_with_subscription</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The SaaS pricing model of your product.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Registration page
-(<code>CreateRegistrationWebPage</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>NO_LABEL</strong>
-(<code>WebsiteS3BucketName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The S3 bucket that holds the static HTML registration page files. If this bucket doesn&#8217;t exist, it is created.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Product code
-(<code>ProductCode</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The product code provided by AWS Marketplace at the time the limited listing was published.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Subscriptions SNS topic ARN
-(<code>SubscriptionSNSTopic</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Entitlements SNS topic ARN
-(<code>EntitlementSNSTopic</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New subscribers DynamoDB table name
-(<code>NewSubscribersTableName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceSubscribers</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The custom value for the New Subscribers table. Value must be unique per product.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Metering records Amazon DynamoDB table name
-(<code>AWSMarketplaceMeteringRecordsTableName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceMeteringRecords</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Custom value for the metering records table. Value must be unique per product.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Admin email address
-(<code>MarketplaceTechAdminEmail</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artifact S3 bucket name
-(<code>ArtifactBucketName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws-quickstart</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the S3 bucket name that contains that artifacts. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>+</p>
+</div>
 <div class="paragraph">
 <p>+
 . On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you finish, choose <strong>Next</strong>.
@@ -1301,6 +1326,10 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 . Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the AWS Marketplace Serverless SaaS Integration deployment is ready.
 . To view the created resources, see the values displayed in the <strong>Outputs</strong> tab for the stack.</p>
 </div>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/additional_info.adoc</code></strong></em></p>
+</div>
+<div class="preview_mode">
 </div>
 </div>
 </div>
@@ -1447,6 +1476,10 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <div class="paragraph">
 <p>To receive email notifications on the AWS Marketplace Tech Admin email address for subscription events, confirm the subscription to the newly deployed Amazon SNS topic by choosing the confirmation link sent during deployment.</p>
 </div>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/faq_troubleshooting.adoc</code></strong></em></p>
+</div>
+<div class="preview_mode">
 </div>
 </div>
 </div>
@@ -1493,11 +1526,109 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="_customer_responsibility">Customer responsibility</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After you successfully deploy this Quick Start, confirm that your resources and services are updated and configured — including any required patches — to meet your security and other needs. For more information, see the <a href="https://aws.amazon.com/compliance/shared-responsibility-model/" target="_blank" rel="noopener">AWS Shared Responsibility Model</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameter_reference">Parameter reference</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters labeled <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these parameter settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. AWS Integration and Automation configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SaaS pricing model
+(<code>TypeOfSaaSListing</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>contracts_with_subscription</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SaaS pricing model of your product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration page
+(<code>CreateRegistrationWebPage</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3 bucket name
+(<code>WebsiteS3BucketName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The S3 bucket that holds the static HTML registration page files. If this bucket doesn&#8217;t exist, it is created.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product code
+(<code>ProductCode</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The product code provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subscriptions SNS topic ARN
+(<code>SubscriptionSNSTopic</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entitlements SNS topic ARN
+(<code>EntitlementSNSTopic</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">New subscribers DynamoDB table name
+(<code>NewSubscribersTableName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceSubscribers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The custom value for the New Subscribers table. Value must be unique per product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metering records Amazon DynamoDB table name
+(<code>AWSMarketplaceMeteringRecordsTableName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceMeteringRecords</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom value for the metering records table. Value must be unique per product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Admin email address
+(<code>MarketplaceTechAdminEmail</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Artifact S3 bucket name
+(<code>ArtifactBucketName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws-quickstart</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the S3 bucket name that contains that artifacts. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -1542,8 +1673,16 @@ and to share your customizations with others.</p>
 </div>
 <p class="footer-text">
 <!-- We can use document attributes: -->
-<!-- Generated with Asciidoctor v2.0.15. -->
+<!-- Generated with Asciidoctor v2.0.17. -->
 <a href="https://aws.amazon.com/privacy/">Privacy</a> | <a href="https://aws.amazon.com/terms/">Site terms</a> | &copy; 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.
 </p>
 </body>
 </html>
+<!--
+repo commit:
+bff1dd7b4799214a7f99bacfbcec0718a5351993
+
+submodule config:
+ 9b8635677c9a33164146587f4233401bacd56fb6 docs/boilerplate (heads/main)
+ d64bc79d9d36c3b5b685519854800f723415543d submodules/sam (d64bc79)
+-->

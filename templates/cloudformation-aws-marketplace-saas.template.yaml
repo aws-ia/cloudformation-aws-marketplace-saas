@@ -22,7 +22,7 @@ Metadata:
       TypeOfSaaSListing:
         default: "SaaS pricing model"
       WebsiteS3BucketName:
-        default: ""
+        default: "S3 bucket name"
       # AWS IA configuration
       ArtifactBucketName:
         default: Artifact S3 bucket name
