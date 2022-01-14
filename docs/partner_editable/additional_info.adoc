@@ -86,22 +86,33 @@ After the record is submitted to the AWS Marketplace API, the record updates, an
 == Post-deployment steps
 // If post-deployment steps are required, add them here. If not, remove the heading
 
-=== Connect your Cloudfront distribution to API Gateway
+=== Set up your registration page
 
-To connect the Cloudfront Distribution of the registration page, do the following steps to update the *baseUrl* property in web/script.js file with the API Gateway endpoint URL.
+After your stack has launched successfully, set up your registration page and connect it with the API Gateway created by the stack. Your registration page will be hosted in the website S3 bucket that was created by the stack earlier. 
 
-. Retrieve the ID of the API you just deployed from https://console.aws.amazon.com/apigateway/main/apis?region=us-east-1[API Gateway^].
-. Update the *baseUrl* property in the */web/scripts.js* file with the the API ID you just retrieved. This file is located within the *s3://<WEBSITE_BUCKET_NAME>/* bucket, where *WEBSITE_BUCKET_NAME* is a deployment parameter that you define. See the following example. Save your changes. 
+. https://awsmp-usageinstructions.s3.amazonaws.com/SaaSQuickStartRegistrationPage.zip[Download^] the website files to your local computer. 
+. Unzip the file and open the *web* folder to access the files inside. 
+. Retrieve the API ID of the API Gateway deployed by the stack.
+. Open the file named *scripts.js* and update the *baseUrl* property in line 1 with the API ID you just retrieved from the API Gateway console. Save the changes to the file.
+
+==== Example
 
     ** *Before*: `const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';` 
     ** *After*: `const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';`
-[start=3]
-. If using an IDE, you can update S3 with 'aws s3 cp ./web/ s3://<WEBSITE_BUCKET_NAME>/ --recursive'
+
+[start=5]
+. Open the website S3 bucket created by the stack in your S3 console, and upload the five files in the web folder to the S3 bucket. 
+
+Your integration is now ready for use. Since CloudFront distribution is used to ensure low latency for the registration page, the SaaS fulfillment URL is the CloudFront CName (domain name) of the distribution created by the stack. 
+
+Go to the https://console.aws.amazon.com/cloudfront/home?region=us-east-1[CloudFront console^] to retrieve the domain name. Be sure to provide the domain name to the AWS Marketplace Seller Operations team to associate with your limited SaaS listing.
+
+* SaaS fulfillment URL format: https://_<domain name>_ 
+* Example URL: https://d142rocbcrghws.cloudfront.net
 
 === Confirm the Amazon SNS subscription
 
-To receive email notifications on the AWS Marketplace Tech Admin email address for subscription events, confirm the subscription to the newly deployed Amazon SNS topic by choosing the confirmation link sent during deployment.
-
+To receive email notifications on the MarketplaceTechAdmin email address for subscription events, confirm the subscription to the newly deployed SNS topic. You must have received an email susbcription confirmation link after the stack was launched. Choose the confirmation link and confirm your subscription. 
 
 //== Best practices for using {partner-product-short-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
