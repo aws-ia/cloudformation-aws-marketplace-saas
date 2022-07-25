@@ -27,7 +27,7 @@ Metadata:
       ArtifactBucketName:
         default: Artifact S3 bucket name
     ParameterGroups:
-      - Label:
+      - Label: 
           default: AWS Integration and Automation configuration
         Parameters:
           - TypeOfSaaSListing
@@ -39,7 +39,11 @@ Metadata:
           - NewSubscribersTableName
           - AWSMarketplaceMeteringRecordsTableName
           - MarketplaceTechAdminEmail
-          - ArtifactBucketName
+      - Label: 
+          default: Quick Starts Parameters (Do not change)
+        Parameters:
+           - ArtifactBucketName          
+
              
 Parameters:
   AWSMarketplaceMeteringRecordsTableName:
@@ -88,9 +92,7 @@ Parameters:
       (-).
     Default: aws-quickstart
     # TODO: nitpick the name and wording here
-    Description: Name of the S3 bucket name that contains that artifacts. This string can include
-      numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start
-      or end with a hyphen (-).
+    Description: Name of the S3 bucket name that contains the SAM artifacts. This parameter should not be changed if using the Quick Start solution. Doing so will cause the deployment to fail.
     Type: String
 Conditions:
   CreateRegistrationWebPageCond: !Equals
