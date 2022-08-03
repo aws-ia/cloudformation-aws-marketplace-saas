@@ -48,19 +48,39 @@ New records in the *AWSMarketplaceMeteringRecords* table should be stored in the
 
 ....
 {
-  "create_timestamp": 113123,
-  "customerIdentifier": "ifAPi5AcF3",
-  "dimension_usage": [
-    {
-      "dimension": "users",
-      "value": 3
-    },
-     {
-      "dimension": "admin_users",
-      "value": 1
-    }
-  ],
-  "metering_pending": "true"
+  "create_timestamp": {
+    "N": "113123"
+  },
+  "customerIdentifier": {
+    "S": "ifAPi5AcF3"
+  },
+  "dimension_usage": {
+    "L": [
+      {
+        "M": {
+          "dimension": {
+            "S": "users"
+          },
+          "value": {
+            "N": "3"
+          }
+        }
+      },
+      {
+        "M": {
+          "dimension": {
+            "S": "admin_users"
+          },
+          "value": {
+            "N": "1"
+          }
+        }
+      }
+    ]
+  },
+  "metering_pending": {
+    "S": "true"
+  }
 }
 ....
 
