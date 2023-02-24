@@ -117,8 +117,8 @@ Resources:
 Outputs:
   APIUrl:
     Description: API gateway URL to replace baseUrl value in web/script.js
-    Value: !GetAtt sampleApp.Outputs.APIUrl
+    Value: !GetAtt SampleApp.Outputs.APIUrl
  
   LandingPageUrl:
     Description: URL to access your landing page and update SaaS URL field in your listing.
-    Value: !GetAtt sampleApp.Outputs.LandingPageUrl
+    Value: !GetAtt SampleApp.Outputs.LandingPageUrl
