@@ -14,10 +14,30 @@ For more information, see https://docs.aws.amazon.com/AWSCloudFormation/latest/U
 
 *A.* Launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template-size limitations. For more information, see http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html[AWS CloudFormation quotas^].
 
+*Q.* Which pricing model should I select when deploying the Quick Start?
+
+*A.* The pricing model you select in the Quick Start corresponds to the pricing model you selected for your product when you requested it in the AWS Marketplace Management Portal. The Contract pricing model indicates an upfront payment for a specified duration. The Subscription pricing model indicates a purely pay-as-you-go, consumption-based pricing model. And the Contract with Consumption pricing model is a combination of both upfront payments and usage-based charges (often contract overage fees).
+
+*Q.* Can I deploy the Quick Start from any AWS account?
+
+*A.* Currently, the Quick Start can only be deployed from your registered seller account. The AWS account you use must be the same account that requested to list the product from the AWS Marketplace Management Portal.
 
 == Troubleshooting
 
-Check the following:
-* Ensure that you deploy in a supported Region (see link:#_supported_regions[Supported Regions])
-* Confirm that you are deploying into your registered seller account.
-* Ensure that the names assigned for *WebsiteS3BucketName*, *NewSubscribersTableName*, and *AWSMarketplaceMeteringRecordsTableName* parameters don't already exist within S3 and DynamoDB.
+Common errors:
+
+*Error:* Region is not compatible/supported
+
+*Fix:* Ensure that you deploy in a supported Region (see link:#_supported_aws_regions[Supported Regions])
+
+*Error:* Not deploying in the seller account
+
+*Fix:* Confirm that you are deploying using your registered seller account.
+
+*Error:* S3 bucket is failing to create
+
+*Fix:* Ensure that the names assigned for *WebsiteS3BucketName* is globally unique across all AWS accounts, and that the name you entered follows the S3 naming requirements: only alphanumeric characters, hyphens, and underscores (no spaces), and cannot start with a number.
+
+*Error:* DynamoDB tables are failing to crate
+
+*Fix:* Verify that the *NewSubscribersTableName* and *AWSMarketplaceMeteringRecordsTableName* parameters don't already exist as tables within DynamoDB in your AWS account. The names must be unique within your account.

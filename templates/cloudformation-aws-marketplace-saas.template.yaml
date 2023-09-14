@@ -25,7 +25,7 @@ Metadata:
         default: "S3 bucket name"
       # AWS IA configuration
       ArtifactBucketName:
-        default: Artifact S3 bucket name
+        default: "Artifact S3 bucket name"
     ParameterGroups:
       - Label: 
           default: AWS Integration and Automation configuration
@@ -48,7 +48,7 @@ Metadata:
 Parameters:
   AWSMarketplaceMeteringRecordsTableName:
     Default: AWSMarketplaceMeteringRecords
-    Description: "Custom value for the metering records table. Value must be unique per product."
+    Description: "The custom name for the metering records table. Name must be unique per product."
     Type: String
   CreateRegistrationWebPage:
     AllowedValues:
@@ -65,7 +65,7 @@ Parameters:
     Description: "The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events."
   NewSubscribersTableName:
     Default: AWSMarketplaceSubscribers
-    Description: "The custom value for the New Subscribers table. Value must be unique per product."
+    Description: "The custom name for the subscribers table. Name must be unique per product."
     Type: String
   ProductCode:
     Description: "The product code provided by AWS Marketplace at the time the limited listing was published."
@@ -83,7 +83,7 @@ Parameters:
     Type: String
   WebsiteS3BucketName:
     Type: String
-    Description: "The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created."
+    Description: "The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created. Name must be unique across all AWS accounts, and must only contain lower-case letters, numbers, dashes, and underscores."
   # Integration and Automation location parameters
   ArtifactBucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
@@ -113,10 +113,10 @@ Resources:
         ProductCode: !Ref ProductCode
         SubscriptionSNSTopic: !Ref SubscriptionSNSTopic
         TypeOfSaaSListing: !Ref TypeOfSaaSListing
-        WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue] 
+        WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue]
 Outputs:
   APIUrl:
-    Description: API gateway URL to replace baseUrl value in web/script.js
+    Description: API gateway URL to replace baseUrl value in web/script.js.
     Value: !GetAtt SampleApp.Outputs.APIUrl
  
   LandingPageUrl:
