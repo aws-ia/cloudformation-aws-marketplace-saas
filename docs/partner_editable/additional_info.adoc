@@ -1,5 +1,69 @@
-// Add steps as necessary for accessing the software, post-configuration, and testing. Don’t include full usage instructions for your software, but add links to your product documentation for that information.
-//Should any sections not be applicable, remove them
+== Post-deployment steps
+
+=== Set up your registration page
+
+After your stack has launched successfully, set up your registration page and connect it with the API Gateway created by the stack. Your registration page will be hosted in the website S3 bucket that was created by the stack earlier. 
+
+. https://awsmp-usageinstructions.s3.amazonaws.com/SaaSQuickStartRegistrationPage.zip[Download^] the website files to your local computer. 
+. Unzip the file and open the *web* folder to access the files inside. 
+. In your completed CloudFormation stack, go to the Outputs tab and retrieve the *APIURL*.
+. Open the file named *scripts.js* and replace the *baseUrl* with the *APIURL* you retrieved from the stack Outputs tab. Save the changes to the file.
+
+==== Example
+
+    ** *Before*: `const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';` 
+    ** *After*: `const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';`
+
+[start=5]
+. Open the website S3 bucket created by the stack in your S3 console, and upload the five files in the web folder to the S3 bucket. *NOTE:* upload the files, not the *web* folder itself. The files should exist in the root of the bucket, not within the *web* folder.
+. In your completed CloudFormation stack again, go to the Outputs tab and retrieve the *LandingPageURL*. This is the URL that points to a CloudFront distribution to ensure low latency for the registration page.
+. Provide the domain name to the AWS Marketplace Seller Operations team.
+    ** If you already have an open Request to publish the listing, then submit the *LandingPageURL* in the *SaaS URL* field of the Request form.
+    ** If you don't already have an open Request to publish the listing, then submit a request to edit the *SaaS URL* and set it to the *LandingPageURL* by following the steps listed in our Seller Guide: https://docs.aws.amazon.com/marketplace/latest/userguide/saas-product-settings.html#update-fulfillment-options
+
+* SaaS fulfillment URL format: https://_<domain name>_/index.html
+* Example URL: https://d142rocbcrghws.cloudfront.net/index.html
+
+=== Confirm the Amazon SNS subscription
+
+To receive email notifications on the MarketplaceTechAdmin email address for subscription events, confirm the subscription to the newly deployed SNS topic. You will have received an email susbcription confirmation link after the stack was launched. Choose the confirmation link and confirm your subscription. 
+
+=== Test the Entitlements (SaaS Contracts and Contracts with Consumption)
+
+For SaaS contracts and contracts with consumption listings, you need to test that the QuickStart stack is able to correctly call the GetEntitlements API to retrieve subscribers' contract entitlements. To do so, login to AWS under your seller account, and navigate to your AWS Marketplace product listing page.
+
+Once there, select *View purchase options* and then choose any of the contract options available. Finally, select *Create contract*. When you are prompted to confirm the purchase, select *Yes*. This will charge your seller account, but you can always request a refund later if the charge is significant.
+
+When the payment is confirmed, select *Set up your account* to be redirected to the registration page. On the registration page, enter your contact information and choose *Submit*. This information, along with your contract entitlement information, will be stored in the AWSMarketplaceSubscribers DynamoDB table.
+
+To verify that testing has passed, confirm the following:
+. The registration page loads fully with no error messages
+. The registration page displays a "Success!" message after you click *Submit*
+. You receive an email notification on the MarketplaceTechAdmin email address with the entitlement information
+. The customer information is stored in the AWSMarketplaceSubscribers DynamoDB table
+    ** To check the DynamoDB table, navigate to DynamoDB in the AWS Management Console, select *Tables* from the navigation menu, choose the *AWSMarketplaceSubscribers* table, and select *Explore table items*. The table should have a new item with the new customer entitlement information.
+
+If all of the above are confirmed, then testing has passed, and your integration is fully operational!
+
+=== Test the Metering (SaaS Subscriptions and Contracts with Consumption)
+
+For SaaS subscriptions and contracts with consumption listings, you need to test that the QuickStart stack is able to correctly call the BatchMeterUsage API to send metering records to the AWS Marketplace Metering Service. To do so, login to AWS under your seller account, and navigate to your AWS Marketplace product listing page.
+
+Once there, select *View purchase options* and then either select a contract option and select *Create contract*, or choose *Subscribe*. When you are prompted to confirm the purchase, select *Yes*. For SaaS contracts with consumption products, this will charge your seller account, but you can always request a refund later if the charge is significant.
+
+When the subscription is confirmed, select *Set up your account* to be redirected to the registration page. On the registration page, enter your contact information and choose *Submit*. This information, along with your subscription information, will be stored in the AWSMarketplaceSubscribers DynamoDB table.
+
+Now that you are subscribed, you need to test that you can send metering records. To do so, follow the steps listed here: https://aws.amazon.com/blogs/awsmarketplace/how-meter-usage-subscriptions-using-saas-quick-start/
+
+To verify that testing has passed, confirm the following:
+. The registration page loads fully with no error messages
+. The registration page displays a "Success!" message after you click *Submit*
+. You receive an email notification on the MarketplaceTechAdmin email address with the subscription status
+. The customer information is stored in the AWSMarketplaceSubscribers DynamoDB table
+    ** To check the DynamoDB table, navigate to DynamoDB in the AWS Management Console, select *Tables* from the navigation menu, choose the *AWSMarketplaceSubscribers* table, and select *Explore table items*. The table should have a new item with the new customer entitlement information.
+. A metering record was successfully sent from the AWSMarketplaceMeteringRecords DynamoDB table
+
+If all of the above are confirmed, then testing has passed, and your integration is fully operational!
 
 == How it works
 // If steps are required to test the deployment, add them here. If not, remove the heading
@@ -37,7 +101,6 @@ The revoke-access logic is implemented in a similar way as the grant-access logi
 === Meter for usage
 
 For SaaS subscriptions listings, the SaaS vendor must meter for all usage and report the metering record to AWS Marketplace, which then bills customers based on the records provided. For SaaS contracts, the vendor only meters for usage beyond a customer’s contract entitlements. The SaaS provider must send AWS a quantity of usage accrued for each customer on the dimensions defined when you created your product, such as gigabytes transferred or hosts scanned in a given hour.
-
 
 The *MeteringSchedule* CloudWatch event rule is triggered every hour. At that time, the *metering-hourly-job.js* function queries all of the pending and unreported metering records from the *AWSMarketplaceMeteringRecords* table using the *PendingMeteringRecordsIndex* index. All pending records are aggregated based on the *customerIdentifier* property and dimension name and sent to the *SQSMetering* queue. The records in the *AWSMarketplaceMeteringRecords* table should be inserted programmatically by your SaaS application. To allow write access to the *AWSMarketplaceMeteringRecords* table, you must give permissions to the service in charge of collecting usage data in your existing SaaS product.
 
@@ -103,36 +166,6 @@ After the record is submitted to the AWS Marketplace API, the record updates, an
  }
 ....
 
-== Post-deployment steps
-// If post-deployment steps are required, add them here. If not, remove the heading
-
-=== Set up your registration page
-
-After your stack has launched successfully, set up your registration page and connect it with the API Gateway created by the stack. Your registration page will be hosted in the website S3 bucket that was created by the stack earlier. 
-
-. https://awsmp-usageinstructions.s3.amazonaws.com/SaaSQuickStartRegistrationPage.zip[Download^] the website files to your local computer. 
-. Unzip the file and open the *web* folder to access the files inside. 
-. Retrieve the API ID of the API Gateway deployed by the stack.
-. Open the file named *scripts.js* and update the *baseUrl* property in line 1 with the API ID you just retrieved from the API Gateway console. Save the changes to the file.
-
-==== Example
-
-    ** *Before*: `const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';` 
-    ** *After*: `const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';`
-
-[start=5]
-. Open the website S3 bucket created by the stack in your S3 console, and upload the five files in the web folder to the S3 bucket. 
-
-Your integration is now ready for use. Since CloudFront distribution is used to ensure low latency for the registration page, the SaaS fulfillment URL is the CloudFront CName (domain name) of the distribution created by the stack. 
-
-Go to the https://console.aws.amazon.com/cloudfront/home?region=us-east-1[CloudFront console^] to retrieve the domain name. Be sure to provide the domain name to the AWS Marketplace Seller Operations team to associate with your limited SaaS listing.
-
-* SaaS fulfillment URL format: https://_<domain name>_ 
-* Example URL: https://d142rocbcrghws.cloudfront.net
-
-=== Confirm the Amazon SNS subscription
-
-To receive email notifications on the MarketplaceTechAdmin email address for subscription events, confirm the subscription to the newly deployed SNS topic. You must have received an email susbcription confirmation link after the stack was launched. Choose the confirmation link and confirm your subscription. 
 
 //== Best practices for using {partner-product-short-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
