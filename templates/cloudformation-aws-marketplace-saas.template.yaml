@@ -71,7 +71,7 @@ Parameters:
     Description: "The product code provided by AWS Marketplace at the time the limited listing was published."
     Type: String
   SubscriptionSNSTopic:
-    Description: "If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published."
+    Description: "If your product is a SaaS subscription or Saas contract with subscription, use the subscription SNS topic provided by AWS Marketplace at the time the limited listing was published."
     Type: String
   TypeOfSaaSListing:
     AllowedValues:
