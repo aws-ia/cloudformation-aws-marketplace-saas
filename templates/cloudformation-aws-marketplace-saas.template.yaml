@@ -6,45 +6,59 @@ Metadata:
   AWS::CloudFormation::Interface:
     ParameterLabels:
       AWSMarketplaceMeteringRecordsTableName:
-        default: "Metering records Amazon DynamoDB table name"
+        default: "Metering records Amazon DynamoDB table name prefix"
       CreateRegistrationWebPage:
-        default: "Registration page"
+        default: "Create registration page"
       EntitlementSNSTopic:
         default: "Entitlements SNS topic ARN"
       MarketplaceTechAdminEmail:
         default: "Admin email address"
       NewSubscribersTableName:
-        default: "New subscribers DynamoDB table name"
+        default: "New subscribers DynamoDB table name prefix"
       ProductCode:
         default: "Product code"
       SubscriptionSNSTopic:
         default: "Subscriptions SNS topic ARN"
-      TypeOfSaaSListing:
-        default: "SaaS pricing model"
-      WebsiteS3BucketName:
-        default: "S3 bucket name"
+      PricingModel:
+        default: "Pricing model"
       # AWS IA configuration
       ArtifactBucketName:
         default: Artifact S3 bucket name
-
+      CreateCrossAccountRole:
+        default: "Create cross account role"
+      CrossAccountId:
+        default: "Cross account AWS ID"
+      CrossAccountRoleName:
+        default: "Cross account role name"
+      MarketplaceSellerEmail:
+        default: "Marketplace seller email"
+      RegistrationPageWebBucketPrefix:
+        default: "Registration page web bucket prefix"
 
     ParameterGroups:
       - Label: 
-          default: AWS Integration and Automation configuration
+          default: Required configurations
         Parameters:
-          - TypeOfSaaSListing
+          - PricingModel
           - CreateRegistrationWebPage
-          - WebsiteS3BucketName
           - ProductCode
-          - SubscriptionSNSTopic
-          - EntitlementSNSTopic
+          - MarketplaceTechAdminEmail
+      - Label: 
+          default: Optional configurations
+        Parameters:
+          - RegistrationPageWebBucketPrefix
           - NewSubscribersTableName
           - AWSMarketplaceMeteringRecordsTableName
-          - MarketplaceTechAdminEmail
+          - CreateCrossAccountRole
+          - CrossAccountId
+          - CrossAccountRoleName
+          - MarketplaceSellerEmail
       - Label: 
           default: Quick Starts Parameters (Do not change)
         Parameters:
-           - ArtifactBucketName          
+           - ArtifactBucketName   
+           - SNSAccountID
+           - SNSRegion  
 Parameters:
 
   # Integration and Automation location parameters
@@ -57,29 +71,24 @@ Parameters:
     # TODO: nitpick the name and wording here
     Description: Name of the S3 bucket name that contains the SAM artifacts. This parameter should not be changed if using the Quick Start solution. Doing so will cause the deployment to fail.
     Type: String
-
-  WebsiteS3BucketName:
-    Type: String
-    Description: "The S3 bucket that holds the static HTML registration page files. The bucket name must follow S3 recommendations https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html"
-    Default: ''
   NewSubscribersTableName:
-    Description: "The custom value for the New Subscribers table. Value must be unique per product."
+    Description: "This is the name prefix for the DynamoDB table that will store subscriber information."
     Type: String
     AllowedPattern: .*
     Default: AWSMarketplaceSubscribers
   AWSMarketplaceMeteringRecordsTableName:
-    Description: "Custom value for the metering records table. Value must be unique per product."
+    Description: "This is the name prefix for the DynamoDB table that will be used to report usage information for your subscribers."
     Type: String
     AllowedPattern: .*
     Default: AWSMarketplaceMeteringRecords
-  TypeOfSaaSListing:
-    Description: "The SaaS pricing model of your product."
+  PricingModel:
+    Description: "The pricing model that you choose determines how buyers are able to purchase your product. Ths value should match the price model you selected when creating your listing."
     Type: String
-    Default: contracts_with_subscription
+    Default: Contract-based-pricing
     AllowedValues:
-    - contracts_with_subscription
-    - contracts
-    - subscriptions
+    - Contract-with-consumption
+    - Contract-based-pricing
+    - Usage-based-pricing
   SNSAccountID:
     Type: String
     Default: '287250355862'
@@ -95,56 +104,58 @@ Parameters:
     AllowedValues:
     - us-east-1
   ProductCode:
-    Description: "The product code provided by AWS Marketplace at the time the limited listing was published."
+    Description: "Provide the product code for your listing. You can find the product code in the 'Product summary' section for your listing in the AWS Marketplace Management Portal."
     Type: String
     AllowedPattern: .*
   MarketplaceTechAdminEmail:
-    Description: "The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events."
+    Description: "Provide the email address that will receive notifications for new customer registrations, entitlement changes, and subscription events."
     Type: String
     AllowedPattern: .*
-  MarketplaceSellerEmail:
-    Type: String
-    AllowedPattern: .*
-    Default: ''
   CreateCrossAccountRole:
     Default: 'false'
-    Description: Do you intend to use cross account access with this integration core?
+    Description: "Select 'true' if you'd like to create a cross account role for managing the subscriber and metering DynamoDB tables created in your integration."
     Type: String
     AllowedValues:
     - 'true'
     - 'false'
   CrossAccountId:
     Default: ''
-    Description: Enter the cross AWS account id
+    Description: "If you selected 'true' for 'Create cross account role', enter the desired AWS account ID you wish to enable cross account access for."
     Type: String
   CrossAccountRoleName:
     Type: String
-    Description: 'Your Role Name (ex: OrganizationAccountAccessRole); This will need
-      to be the same across all of the Member Accounts'
+    Description: "If you selected 'true' for 'Create cross account role', enter the desired IAM role name."
   CreateRegistrationWebPage:
-    Description: "Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'."
+    Description: "Choose 'true' to create a new registration page as part of this deployment. If you already have a registration page, choose 'false'."
     Default: 'true'
     Type: String
     AllowedValues:
     - 'true'
     - 'false'
-
-
-
-
-
-
+  MarketplaceSellerEmail:
+    Description: "If you wish to enable custom welcome email notifications for new buyers, provide the sender email address that will be featured in the 'From' line. The email address must be a verified identity in your Amazon Simple Notification Service (SES) with production access. Leave this field blank if you have not configured SES."
+    Type: String
+    AllowedPattern: .*
+    Default: ''
+  RegistrationPageWebBucketPrefix:
+    Description: "This is the name prefix for the S3 bucket that will store the web file for your registration page."
+    Type: String
+    AllowedPattern: .*
+    Default: 'web'
 
 Conditions:
   CreateRegistrationWebPageCond: !Equals
     - !Ref CreateRegistrationWebPage
     - true
 
-
-
-
-
-
+Mappings:
+  PricingModelMap:
+    Usage-based-pricing:
+      PricingOption: subscriptions
+    Contract-based-pricing:
+      PricingOption: contracts
+    Contract-with-consumption:
+      PricingOption: contracts_with_subscription
 
 Resources:
   SampleApp:
@@ -152,19 +163,64 @@ Resources:
     Properties:
       TemplateURL: "https://packaging-bucket-13a87d77.s3.amazonaws.com/packaged.yaml"
       Parameters:
-        WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue]
-        NewSubscribersTableName: !Ref NewSubscribersTableName
-        AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
-        TypeOfSaaSListing: !Ref TypeOfSaaSListing
+        WebsiteS3BucketName:
+          !If
+          - CreateRegistrationWebPageCond
+          - !Join
+            - '-'
+            - - !Ref RegistrationPageWebBucketPrefix
+              - !Select 
+                - 0
+                - !Split 
+                  - "-"
+                  - !Select
+                    - 2
+                    - !Split
+                      - "/"
+                      - !Ref AWS::StackId
+
+
+          - !Ref "AWS::NoValue"
+        NewSubscribersTableName:
+          !Join
+            - '-'
+            - - !Ref NewSubscribersTableName
+              - !Select 
+                - 0
+                - !Split 
+                  - "-"
+                  - !Select
+                    - 2
+                    - !Split
+                      - "/"
+                      - !Ref AWS::StackId
+        AWSMarketplaceMeteringRecordsTableName: 
+          !Join
+            - '-'
+            - - !Ref AWSMarketplaceMeteringRecordsTableName
+              - !Select 
+                - 0
+                - !Split 
+                  - "-"
+                  - !Select
+                    - 2
+                    - !Split
+                      - "/"
+                      - !Ref AWS::StackId
+
+        TypeOfSaaSListing: !FindInMap  
+          - PricingModelMap
+          - !Ref PricingModel
+          - PricingOption  
         SNSAccountID: !Ref SNSAccountID
         SNSRegion: !Ref SNSRegion
         ProductCode: !Ref ProductCode
         MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
-        MarketplaceSellerEmail: !Ref MarketplaceSellerEmail
         CreateCrossAccountRole: !Ref CreateCrossAccountRole
         CrossAccountId: !Ref CrossAccountId
-        CrossAccountRoleName: !Ref rossAccountRoleName
+        CrossAccountRoleName: !Ref CrossAccountRoleName
         CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
+        MarketplaceSellerEmail: !Ref MarketplaceSellerEmail
 Outputs:
   CrossAccountRole:
     Description: This is the cross account role ARN.
