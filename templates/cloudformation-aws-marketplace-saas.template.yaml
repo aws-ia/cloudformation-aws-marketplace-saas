@@ -5,16 +5,10 @@ Metadata:
     EntrypointName: "Deploy AWS Marketplace SaaS entitlement and subscription portal"
   AWS::CloudFormation::Interface:
     ParameterLabels:
-      AWSMarketplaceMeteringRecordsTableName:
-        default: "Metering records Amazon DynamoDB table name prefix"
-      CreateRegistrationWebPage:
-        default: "Create registration page"
       EntitlementSNSTopic:
         default: "Entitlements SNS topic ARN"
       MarketplaceTechAdminEmail:
         default: "Admin email address"
-      NewSubscribersTableName:
-        default: "New subscribers DynamoDB table name prefix"
       ProductCode:
         default: "Product code"
       SubscriptionSNSTopic:
@@ -24,35 +18,13 @@ Metadata:
       # AWS IA configuration
       ArtifactBucketName:
         default: Artifact S3 bucket name
-      CreateCrossAccountRole:
-        default: "Create cross account role"
-      CrossAccountId:
-        default: "Cross account AWS ID"
-      CrossAccountRoleName:
-        default: "Cross account role name"
-      MarketplaceSellerEmail:
-        default: "Marketplace seller email"
-      RegistrationPageWebBucketPrefix:
-        default: "Registration page web bucket prefix"
-
     ParameterGroups:
       - Label: 
-          default: Required configurations
+          default: Integration configurations
         Parameters:
           - PricingModel
-          - CreateRegistrationWebPage
           - ProductCode
           - MarketplaceTechAdminEmail
-      - Label: 
-          default: Optional configurations
-        Parameters:
-          - RegistrationPageWebBucketPrefix
-          - NewSubscribersTableName
-          - AWSMarketplaceMeteringRecordsTableName
-          - CreateCrossAccountRole
-          - CrossAccountId
-          - CrossAccountRoleName
-          - MarketplaceSellerEmail
       - Label: 
           default: Quick Starts Parameters (Do not change)
         Parameters:
@@ -71,16 +43,6 @@ Parameters:
     # TODO: nitpick the name and wording here
     Description: Name of the S3 bucket name that contains the SAM artifacts. This parameter should not be changed if using the Quick Start solution. Doing so will cause the deployment to fail.
     Type: String
-  NewSubscribersTableName:
-    Description: "This is the name prefix for the DynamoDB table that will store subscriber information."
-    Type: String
-    AllowedPattern: .*
-    Default: AWSMarketplaceSubscribers
-  AWSMarketplaceMeteringRecordsTableName:
-    Description: "This is the name prefix for the DynamoDB table that will be used to report usage information for your subscribers."
-    Type: String
-    AllowedPattern: .*
-    Default: AWSMarketplaceMeteringRecords
   PricingModel:
     Description: "The pricing model that you choose determines how buyers are able to purchase your product. Ths value should match the price model you selected when creating your listing."
     Type: String
@@ -111,42 +73,6 @@ Parameters:
     Description: "Provide the email address that will receive notifications for new customer registrations, entitlement changes, and subscription events."
     Type: String
     AllowedPattern: .*
-  CreateCrossAccountRole:
-    Default: 'false'
-    Description: "Select 'true' if you'd like to create a cross account role for managing the subscriber and metering DynamoDB tables created in your integration."
-    Type: String
-    AllowedValues:
-    - 'true'
-    - 'false'
-  CrossAccountId:
-    Default: ''
-    Description: "If you selected 'true' for 'Create cross account role', enter the desired AWS account ID you wish to enable cross account access for."
-    Type: String
-  CrossAccountRoleName:
-    Type: String
-    Description: "If you selected 'true' for 'Create cross account role', enter the desired IAM role name."
-  CreateRegistrationWebPage:
-    Description: "Choose 'true' to create a new registration page as part of this deployment. If you already have a registration page, choose 'false'."
-    Default: 'true'
-    Type: String
-    AllowedValues:
-    - 'true'
-    - 'false'
-  MarketplaceSellerEmail:
-    Description: "If you wish to enable custom welcome email notifications for new buyers, provide the sender email address that will be featured in the 'From' line. The email address must be a verified identity in your Amazon Simple Notification Service (SES) with production access. Leave this field blank if you have not configured SES."
-    Type: String
-    AllowedPattern: .*
-    Default: ''
-  RegistrationPageWebBucketPrefix:
-    Description: "This is the name prefix for the S3 bucket that will store the web file for your registration page."
-    Type: String
-    AllowedPattern: .*
-    Default: 'web'
-
-Conditions:
-  CreateRegistrationWebPageCond: !Equals
-    - !Ref CreateRegistrationWebPage
-    - true
 
 Mappings:
   PricingModelMap:
@@ -161,30 +87,25 @@ Resources:
   SampleApp:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: "https://packaging-bucket-13a87d77.s3.amazonaws.com/packaged.yaml"
+      TemplateURL: "https://packaging-bucket-2-asdflaksd.s3.amazonaws.com/packaged-new.yaml"
       Parameters:
         WebsiteS3BucketName:
-          !If
-          - CreateRegistrationWebPageCond
-          - !Join
-            - '-'
-            - - !Ref RegistrationPageWebBucketPrefix
-              - !Select 
-                - 0
-                - !Split 
-                  - "-"
-                  - !Select
-                    - 2
-                    - !Split
-                      - "/"
-                      - !Ref AWS::StackId
-
-
-          - !Ref "AWS::NoValue"
+         !Join
+          - '-'
+          - - 'web'
+            - !Select 
+              - 0
+              - !Split 
+                - "-"
+                - !Select
+                  - 2
+                  - !Split
+                    - "/"
+                    - !Ref AWS::StackId
         NewSubscribersTableName:
           !Join
             - '-'
-            - - !Ref NewSubscribersTableName
+            - - 'NewSubscribers'
               - !Select 
                 - 0
                 - !Split 
@@ -197,7 +118,7 @@ Resources:
         AWSMarketplaceMeteringRecordsTableName: 
           !Join
             - '-'
-            - - !Ref AWSMarketplaceMeteringRecordsTableName
+            - - 'AWSMarketplaceMeteringRecords'
               - !Select 
                 - 0
                 - !Split 
@@ -207,7 +128,6 @@ Resources:
                     - !Split
                       - "/"
                       - !Ref AWS::StackId
-
         TypeOfSaaSListing: !FindInMap  
           - PricingModelMap
           - !Ref PricingModel
@@ -216,24 +136,20 @@ Resources:
         SNSRegion: !Ref SNSRegion
         ProductCode: !Ref ProductCode
         MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
-        CreateCrossAccountRole: !Ref CreateCrossAccountRole
-        CrossAccountId: !Ref CrossAccountId
-        CrossAccountRoleName: !Ref CrossAccountRoleName
-        CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
-        MarketplaceSellerEmail: !Ref MarketplaceSellerEmail
+        CreateCrossAccountRole: 'false'
+        CrossAccountId: ''
+        CrossAccountRoleName: ''
+        MarketplaceSellerEmail: ''
+        CreateRegistrationWebPage: 'true'
 Outputs:
-  CrossAccountRole:
-    Description: This is the cross account role ARN.
-    Value: !GetAtt SampleApp.Outputs.CrossAccountRole
-
   WebsiteS3Bucket:
-    Description: S3 bucket for hosting the static site. You can retrieve the files
+    Description: This is the bucket for hosting the static site. Retrieve and upload the web files
       at https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/tree/master/web.
     Value: !GetAtt SampleApp.Outputs.WebsiteS3Bucket
   LandingPagePreviewURL:
-    Description: URL to preview your landing page. This is NOT the Fulfillment URL
+    Description: Use this URL to preview your landing page. This is NOT the Fulfillment URL.
       for your product.
     Value: !GetAtt SampleApp.Outputs.LandingPagePreviewURL
-  MarketplaceFulfillmentURL:
-    Description: This is the Marketplace fulfillment URL.
+  AWSMarketplaceFulfillmentURL:
+    Description: This is the AWS Marketplace fulfillment URL. Update the "Default fulfillment URL" for you listing with this value.
     Value: !GetAtt SampleApp.Outputs.MarketplaceFulfillmentURL
