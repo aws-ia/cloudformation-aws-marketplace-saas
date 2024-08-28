@@ -8,7 +8,7 @@ As shown in <<architecture2>>,the {partner-product-short-name} on AWS environmen
 
 [#architecture2]
 .Workflow of {partner-product-short-name} on AWS environment
-image::../images/cloudformation-aws-marketplace-saas-workflow-of-events.png[Workflow]
+image::../images/AWS-Marketplace-SaaS-Integration.drawio.png[Workflow]
 
 === Register new customers
 
