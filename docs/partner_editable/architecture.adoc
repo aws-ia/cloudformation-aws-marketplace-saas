@@ -7,12 +7,12 @@ AWS Cloud.
 
 [#architecture1]
 .Quick Start architecture for {partner-product-short-name} on AWS
-image::../images/cloudformation-aws-marketplace-saas-architecture-diagram.png[Architecture]
+image::../images/Onbording-CF.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following environment:
 
 * AWS Marketplace for managing customer subscriptions and passing tokens with customer billing identifiers and product codes to AWS Marketplace Metering Service and Entitlement Service APIs. 
-* CloudFront Lambda@Edge for intercepting, transforming, and passing customer tokens.
+* AWS Lambda for intercepting, transforming, and passing customer tokens.
 * Amazon CloudFront for providing the configurable registration page URL for the SaaS product integration.
 * Amazon S3 for storing the static HTML pages that accept and submit registration input to the AWS Marketplace customer endpoints. 
 * Amazon API Gateway for receiving tokens from form data on the registration page and generating the new endpoint base URL after the AWS CloudFormation stack is deployed.
