@@ -7,7 +7,7 @@ AWS Cloud.
 
 [#architecture1]
 .Quick Start architecture for {partner-product-short-name} on AWS
-image::../images/Onbording-CF.png[Architecture]
+image::../images/saas-integration-solution-overview.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following environment:
 
