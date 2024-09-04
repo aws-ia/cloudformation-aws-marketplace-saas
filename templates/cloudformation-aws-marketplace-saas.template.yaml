@@ -5,81 +5,34 @@ Metadata:
     EntrypointName: "Deploy AWS Marketplace SaaS entitlement and subscription portal"
   AWS::CloudFormation::Interface:
     ParameterLabels:
-      AWSMarketplaceMeteringRecordsTableName:
-        default: "Metering records Amazon DynamoDB table name"
-      CreateRegistrationWebPage:
-        default: "Registration page"
       EntitlementSNSTopic:
         default: "Entitlements SNS topic ARN"
       MarketplaceTechAdminEmail:
         default: "Admin email address"
-      NewSubscribersTableName:
-        default: "New subscribers DynamoDB table name"
       ProductCode:
         default: "Product code"
       SubscriptionSNSTopic:
         default: "Subscriptions SNS topic ARN"
-      TypeOfSaaSListing:
-        default: "SaaS pricing model"
-      WebsiteS3BucketName:
-        default: "S3 bucket name"
+      PricingModel:
+        default: "Pricing model"
       # AWS IA configuration
       ArtifactBucketName:
         default: Artifact S3 bucket name
     ParameterGroups:
-      - Label:
-          default: AWS Integration and Automation configuration
+      - Label: 
+          default: Integration configurations
         Parameters:
-          - TypeOfSaaSListing
-          - CreateRegistrationWebPage
-          - WebsiteS3BucketName
+          - PricingModel
           - ProductCode
-          - SubscriptionSNSTopic
-          - EntitlementSNSTopic
-          - NewSubscribersTableName
-          - AWSMarketplaceMeteringRecordsTableName
           - MarketplaceTechAdminEmail
-          - ArtifactBucketName
-             
+      - Label: 
+          default: Quick Starts Parameters (Do not change)
+        Parameters:
+           - ArtifactBucketName   
+           - SNSAccountID
+           - SNSRegion  
 Parameters:
-  AWSMarketplaceMeteringRecordsTableName:
-    Default: AWSMarketplaceMeteringRecords
-    Description: "Custom value for the metering records table. Value must be unique per product."
-    Type: String
-  CreateRegistrationWebPage:
-    AllowedValues:
-      - "true"
-      - "false"
-    Default: "true"
-    Description: "Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'."
-    Type: String
-  EntitlementSNSTopic:
-    Description: "If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published."
-    Type: String
-  MarketplaceTechAdminEmail:
-    Type: String
-    Description: "The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events."
-  NewSubscribersTableName:
-    Default: AWSMarketplaceSubscribers
-    Description: "The custom value for the New Subscribers table. Value must be unique per product."
-    Type: String
-  ProductCode:
-    Description: "The product code provided by AWS Marketplace at the time the limited listing was published."
-    Type: String
-  SubscriptionSNSTopic:
-    Description: "If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published."
-    Type: String
-  TypeOfSaaSListing:
-    AllowedValues:
-      - contracts_with_subscription
-      - contracts
-      - subscriptions
-    Default: contracts_with_subscription
-    Description: "The SaaS pricing model of your product."
-    Type: String
-  WebsiteS3BucketName:
-    Type: String
-    Description: "The S3 bucket that holds the static HTML registration page files. If this bucket doesn't exist, it is created."
+
   # Integration and Automation location parameters
   ArtifactBucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
@@ -88,28 +41,115 @@ Parameters:
       (-).
     Default: aws-quickstart
     # TODO: nitpick the name and wording here
-    Description: Name of the S3 bucket name that contains that artifacts. This string can include
-      numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start
-      or end with a hyphen (-).
+    Description: Name of the S3 bucket name that contains the SAM artifacts. This parameter should not be changed if using the Quick Start solution. Doing so will cause the deployment to fail.
     Type: String
-Conditions:
-  CreateRegistrationWebPageCond: !Equals
-    - !Ref CreateRegistrationWebPage
-    - true
+  PricingModel:
+    Description: "The pricing model that you choose determines how buyers are able to purchase your product. Ths value should match the price model you selected when creating your listing."
+    Type: String
+    Default: Contract-based-pricing
+    AllowedValues:
+    - Contract-with-consumption
+    - Contract-based-pricing
+    - Usage-based-pricing
+  SNSAccountID:
+    Type: String
+    Default: '287250355862'
+    Description: This is the AWS account hosting the SNS Entitlement and Subscription
+      topics for your product.
+    AllowedValues:
+    - '287250355862'
+  SNSRegion:
+    Type: String
+    Default: us-east-1
+    Description: This is the AWS region of the SNS Entitlement and Subscription topics
+      for your product.
+    AllowedValues:
+    - us-east-1
+  ProductCode:
+    Description: "Provide the product code for your listing. You can find the product code in the 'Product summary' section for your listing in the AWS Marketplace Management Portal."
+    Type: String
+    AllowedPattern: .*
+  MarketplaceTechAdminEmail:
+    Description: "Provide the email address that will receive notifications for new customer registrations, entitlement changes, and subscription events."
+    Type: String
+    AllowedPattern: .*
+
+Mappings:
+  PricingModelMap:
+    Usage-based-pricing:
+      PricingOption: subscriptions
+    Contract-based-pricing:
+      PricingOption: contracts
+    Contract-with-consumption:
+      PricingOption: contracts_with_subscription
 
 Resources:
   SampleApp:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://${ArtifactBucketName}.s3.amazonaws.com/cloudformation-aws-marketplace-saas/submodules/sam/packaged.yaml"
+      TemplateURL: "https://${ArtifactBucketName}.s3.amazonaws.com/cloudformation-aws-marketplace-saas/submodules/sam/packaged.yaml"
       Parameters:
-        AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
-        CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
-        EntitlementSNSTopic: !Ref EntitlementSNSTopic
-        MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
-        NewSubscribersTableName: !Ref NewSubscribersTableName
+        WebsiteS3BucketName:
+         !Join
+          - '-'
+          - - 'web'
+            - !Select 
+              - 0
+              - !Split 
+                - "-"
+                - !Select
+                  - 2
+                  - !Split
+                    - "/"
+                    - !Ref AWS::StackId
+        NewSubscribersTableName:
+          !Join
+            - '-'
+            - - 'NewSubscribers'
+              - !Select 
+                - 0
+                - !Split 
+                  - "-"
+                  - !Select
+                    - 2
+                    - !Split
+                      - "/"
+                      - !Ref AWS::StackId
+        AWSMarketplaceMeteringRecordsTableName: 
+          !Join
+            - '-'
+            - - 'AWSMarketplaceMeteringRecords'
+              - !Select 
+                - 0
+                - !Split 
+                  - "-"
+                  - !Select
+                    - 2
+                    - !Split
+                      - "/"
+                      - !Ref AWS::StackId
+        TypeOfSaaSListing: !FindInMap  
+          - PricingModelMap
+          - !Ref PricingModel
+          - PricingOption  
+        SNSAccountID: !Ref SNSAccountID
+        SNSRegion: !Ref SNSRegion
         ProductCode: !Ref ProductCode
-        SubscriptionSNSTopic: !Ref SubscriptionSNSTopic
-        TypeOfSaaSListing: !Ref TypeOfSaaSListing
-        WebsiteS3BucketName: !If [CreateRegistrationWebPageCond, !Ref WebsiteS3BucketName, !Ref AWS::NoValue] 
-
+        MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
+        CreateCrossAccountRole: 'false'
+        CrossAccountId: ''
+        CrossAccountRoleName: ''
+        MarketplaceSellerEmail: ''
+        CreateRegistrationWebPage: 'true'
+Outputs:
+  WebsiteS3Bucket:
+    Description: This is the bucket for hosting the static site. Retrieve and upload the web files
+      at https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/tree/master/web.
+    Value: !GetAtt SampleApp.Outputs.WebsiteS3Bucket
+  LandingPagePreviewURL:
+    Description: Use this URL to preview your landing page. This is NOT the Fulfillment URL.
+      for your product.
+    Value: !GetAtt SampleApp.Outputs.LandingPagePreviewURL
+  AWSMarketplaceFulfillmentURL:
+    Description: This is the AWS Marketplace fulfillment URL. Update the "Default fulfillment URL" for you listing with this value.
+    Value: !GetAtt SampleApp.Outputs.MarketplaceFulfillmentURL
