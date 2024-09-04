@@ -2,6 +2,4 @@
 // Identify your target audience and explain how/why they would use this Quick Start.
 //Avoid borrowing text from third-party websites (copying text from AWS service documentation is fine). Also, avoid marketing-speak, focusing instead on the technical aspect.
 
-This guide provides instructions for deploying {partner-product-short-name} on the AWS Cloud.
-
-This Quick Start is for registered AWS Marketplace sellers who want a lightweight serverless solution for completing the required integration on new software as a service (SaaS) listings.
+WARNING: For the latest instructions for deploying {partner-product-short-name} on the AWS Cloud, please reference the https://catalog.workshops.aws/mpseller/en-US/saas/integration-with-quickstart[Integrate your SaaS (with AWS Quick Start example) lab] in the https://catalog.workshops.aws/mpseller/en-US[AWS Marketplace seller workshop].
