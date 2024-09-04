@@ -8,7 +8,7 @@ As shown in <<architecture2>>,the {partner-product-short-name} on AWS environmen
 
 [#architecture2]
 .Workflow of {partner-product-short-name} on AWS environment
-image::../images/cloudformation-aws-marketplace-saas-workflow-of-events.png[Workflow]
+image::../images/AWS-Marketplace-SaaS-Integration.drawio.png[Workflow]
 
 === Register new customers
 
@@ -18,7 +18,7 @@ On your software’s registration page, you can collect whatever information is 
 
 The registration page identifies and accepts the *x-amzn-marketplace-token* token from the AWS Marketplace form data. The token includes the customer’s identiﬁer for billing. The page then passes the token value to the AWS Marketplace Metering Service and AWS Marketplace Entitlement Service APIs to resolve for the unique customer identiﬁer and corresponding product code.
 
-The Quick Start creates a static HTML registration page hosted on Amazon S3. The page takes user inputs that are defined in the HTML form and submits them to the customer endpoint on AWS Marketplace. The page is delivered via a CloudFront distribution, which can be configured to use domain/CNAME. The POST request coming from AWS Marketplace is intercepted by the Lambda@Edge *src/lambda-edge/edge-redirect.js* function, which transforms the POST request to a GET request and passes the *x-amzn-marketplace-token* in the query string. The handler for the customer endpoint on AWS Marketplace is defined in the *src/register-new-subscriber.js* function, which calls the *resolveCustomer* endpoint and validates the token. If the token is valid, the customer record is created in the *AWSMarketplaceSubscribers* DynamoDB table, and the new customer data is stored.
+The Quick Start creates a static HTML registration page hosted on Amazon S3. The page takes user inputs that are defined in the HTML form and submits them to the customer endpoint on AWS Marketplace. The page is delivered via a CloudFront distribution, which can be configured to use domain/CNAME. The POST request coming from AWS Marketplace is intercepted by the Lambda *src/redirect.js* function, which transforms the POST request to a GET request and passes the *x-amzn-marketplace-token* in the query string. The handler for the customer endpoint on AWS Marketplace is defined in the *src/register-new-subscriber.js* function, which calls the *resolveCustomer* endpoint and validates the token. If the token is valid, the customer record is created in the *AWSMarketplaceSubscribers* DynamoDB table, and the new customer data is stored.
 
 === Grant access to new subscribers
 
@@ -106,29 +106,15 @@ After the record is submitted to the AWS Marketplace API, the record updates, an
 == Post-deployment steps
 // If post-deployment steps are required, add them here. If not, remove the heading
 
-=== Set up your registration page
+=== Update the SaaS Fulfillment URL
 
-After your stack has launched successfully, set up your registration page and connect it with the API Gateway created by the stack. Your registration page will be hosted in the website S3 bucket that was created by the stack earlier. 
+Update the fulfillment URL for your SaaS listing.
 
-. https://awsmp-usageinstructions.s3.amazonaws.com/SaaSQuickStartRegistrationPage.zip[Download^] the website files to your local computer. 
-. Unzip the file and open the *web* folder to access the files inside. 
-. Retrieve the API ID of the API Gateway deployed by the stack.
-. Open the file named *scripts.js* and update the *baseUrl* property in line 1 with the API ID you just retrieved from the API Gateway console. Save the changes to the file.
+. Navigate to your SaaS listing in the https://aws.amazon.com/marketplace/management/products/saas[AWS Marketeplace Management Portal^].
+. In the *Fulfillment options* tab, choose *edit*.
+. Update this field with the *AWSMarketplaceFulfillmentURL* value found in the stack outputs.
 
-==== Example
-
-    ** *Before*: `const baseUrl = 'https://API-ID.execute-api.us-east-1.amazonaws.com/Prod/';` 
-    ** *After*: `const baseUrl = 'https://qy7ryx6nkg.execute-api.us-east-1.amazonaws.com/Prod/';`
-
-[start=5]
-. Open the website S3 bucket created by the stack in your S3 console, and upload the five files in the web folder to the S3 bucket. 
-
-Your integration is now ready for use. Since CloudFront distribution is used to ensure low latency for the registration page, the SaaS fulfillment URL is the CloudFront CName (domain name) of the distribution created by the stack. 
-
-Go to the https://console.aws.amazon.com/cloudfront/home?region=us-east-1[CloudFront console^] to retrieve the domain name. Be sure to provide the domain name to the AWS Marketplace Seller Operations team to associate with your limited SaaS listing.
-
-* SaaS fulfillment URL format: https://_<domain name>_ 
-* Example URL: https://d142rocbcrghws.cloudfront.net
+Your integration is now ready for use. 
 
 === Confirm the Amazon SNS subscription
 

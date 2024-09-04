@@ -3,7 +3,7 @@
 |Resource |This deployment uses
 
 // Space needed to maintain table headers
-|S3 Buckets |2
+|S3 Buckets |1
 |SNS Topics |2
 |DynamoDB Tables |2
 |Lambda Functions |7
