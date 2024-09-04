@@ -87,7 +87,7 @@ Resources:
   SampleApp:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: "https://${ArtifactBucketName}.s3.amazonaws.com/cloudformation-aws-marketplace-saas/submodules/sam/packaged.yaml"
+      TemplateURL: !Sub "https://${ArtifactBucketName}.s3.amazonaws.com/cloudformation-aws-marketplace-saas/submodules/sam/packaged.yaml"
       Parameters:
         WebsiteS3BucketName:
          !Join
