@@ -860,7 +860,11 @@ p.footer-text a{color:#d7d8d8}
 <li><a href="#_faq">FAQ</a></li>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
 <li><a href="#_customer_responsibility">Customer responsibility</a></li>
-<li><a href="#_parameter_reference">Parameter reference</a></li>
+<li><a href="#_parameter_reference">Parameter reference</a>
+<ul class="sectlevel2">
+<li><a href="#_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</a></li>
+</ul>
+</li>
 <li><a href="#_send_us_feedback">Send us feedback</a></li>
 <li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
 <li><a href="#_github_repository">GitHub repository</a></li>
@@ -1442,6 +1446,86 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters labeled <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these parameter settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.
 </td>
 </tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_deploy_aws_marketplace_saas_entitlement_and_subscription_portal">Deploy AWS Marketplace SaaS entitlement and subscription portal</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. AWS Integration and Automation configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SaaS pricing model
+(<code>TypeOfSaaSListing</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>contracts_with_subscription</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SaaS pricing model of your product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration page
+(<code>CreateRegistrationWebPage</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3 bucket name
+(<code>WebsiteS3BucketName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The S3 bucket that holds the static HTML registration page files. If this bucket doesn&#8217;t exist, it is created.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product code
+(<code>ProductCode</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The product code provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subscriptions SNS topic ARN
+(<code>SubscriptionSNSTopic</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS subscription or Saas contract with subscription, use the entitlement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entitlements SNS topic ARN
+(<code>EntitlementSNSTopic</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">New subscribers DynamoDB table name
+(<code>NewSubscribersTableName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceSubscribers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The custom value for the New Subscribers table. Value must be unique per product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metering records Amazon DynamoDB table name
+(<code>AWSMarketplaceMeteringRecordsTableName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AWSMarketplaceMeteringRecords</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom value for the metering records table. Value must be unique per product.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Admin email address
+(<code>MarketplaceTechAdminEmail</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Artifact S3 bucket name
+(<code>ArtifactBucketName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws-quickstart</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the S3 bucket name that contains that artifacts. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).</p></td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
