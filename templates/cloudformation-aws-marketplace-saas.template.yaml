@@ -9,8 +9,8 @@ Metadata:
         default: "Entitlements SNS topic ARN"
       MarketplaceTechAdminEmail:
         default: "Admin email address"
-      ProductCode:
-        default: "Product code"
+      ProductId:
+        default: "Product Id"
       SubscriptionSNSTopic:
         default: "Subscriptions SNS topic ARN"
       PricingModel:
@@ -23,14 +23,15 @@ Metadata:
           default: Integration configurations
         Parameters:
           - PricingModel
-          - ProductCode
+          - ProductId
           - MarketplaceTechAdminEmail
       - Label: 
           default: Quick Starts Parameters (Do not change)
         Parameters:
            - ArtifactBucketName   
            - SNSAccountID
-           - SNSRegion  
+           - SNSRegion
+           - UpdateFulfillmentURL
 Parameters:
 
   # Integration and Automation location parameters
@@ -65,14 +66,21 @@ Parameters:
       for your product.
     AllowedValues:
     - us-east-1
-  ProductCode:
-    Description: "Provide the product code for your listing. You can find the product code in the 'Product summary' section for your listing in the AWS Marketplace Management Portal."
+  ProductId:
+    Description: "Provide the product id for your listing. You can find the product id in the 'Product summary' section for your listing in the AWS Marketplace Management Portal."
     Type: String
     AllowedPattern: .*
   MarketplaceTechAdminEmail:
     Description: "Provide the email address that will receive notifications for new customer registrations, entitlement changes, and subscription events."
     Type: String
     AllowedPattern: .*
+  UpdateFulfillmentURL:
+    Default: "false"
+    Type: String
+    Description: "WARNING: This will update your product's fulfillment URL automatically. Be careful if your product is already public"
+    AllowedValues:
+      - "true"
+      - "false"
 
 Mappings:
   PricingModelMap:
@@ -134,13 +142,15 @@ Resources:
           - PricingOption  
         SNSAccountID: !Ref SNSAccountID
         SNSRegion: !Ref SNSRegion
-        ProductCode: !Ref ProductCode
+        ProductId: !Ref ProductId
         MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
         CreateCrossAccountRole: 'false'
         CrossAccountId: ''
         CrossAccountRoleName: ''
         MarketplaceSellerEmail: ''
         CreateRegistrationWebPage: 'true'
+        UpdateFulfillmentURL: !Ref UpdateFulfillmentURL
+
 Outputs:
   WebsiteS3Bucket:
     Description: This is the bucket for hosting the static site. Retrieve and upload the web files
