@@ -28,8 +28,8 @@ Each deployment takes about {deployment_time} to complete.
 +
 [cols="2,1"]
 |===
-^|https://fwd.aws/XxP88?[Deploy {partner-product-short-name} into a new VPC on AWS^]
-^|https://fwd.aws/bDGXB?[View template^]
+^|https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=marketplace-saas&templateURL=https://aws-quickstart.s3.us-east-1.amazonaws.com/cloudformation-aws-marketplace-saas/templates/cloudformation-aws-marketplace-saas.template.yaml[Deploy {partner-product-short-name} into a new VPC on AWS^]
+^|https://aws-quickstart.s3.amazonaws.com/cloudformation-aws-marketplace-saas/templates/cloudformation-aws-marketplace-saas.template.yaml[View template^]
 |===
 +
 . Check the AWS Region that’s displayed in the upper-right corner of the navigation bar, and change it if necessary. The template is launched in the {default_deployment_region} Region by default. For other choices, see link:#_supported_regions[Supported Regions] earlier in this guide.
